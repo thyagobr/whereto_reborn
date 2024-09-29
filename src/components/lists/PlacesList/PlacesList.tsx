@@ -1,9 +1,6 @@
 import { CardSkeleton } from "@/components/CardSkeleton";
-import { Paginator } from "@/components/Paginator";
 import { PlaceCard } from "@/components/place_card";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/skeleton";
 import { useGetPlaces } from "@/hooks/places/useGetPlaces";
 import Link from "next/link";
 

@@ -3,9 +3,11 @@ import { PlacesList } from "@/components/lists/PlacesList/PlacesList";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 
 export default function Home() {
   const [searchText, setSearchText] = useState("");
+  const t = useTranslations("home");
 
   return (
     <div className="mx-4 mb-4">
@@ -18,6 +20,7 @@ export default function Home() {
           className="pl-8"
         />
       </div>
+      <h1 className="text-2xl font-bold mt-4">{t("takeALook")}</h1>
 
       <PlacesList searchText={searchText} />
     </div>

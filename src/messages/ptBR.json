@@ -1,0 +1,9 @@
+{
+  "common": {
+    "hello": "Ola!, {name}!"
+  },
+  "home": {
+    "title": "Casa",
+    "takeALook": "De uma olhadinha"
+  }
+}
