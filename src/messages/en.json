@@ -3,7 +3,9 @@
     "hello": "Hello, {name}!"
   },
   "home": {
-    "title": "Home",
-    "takeALook": "Take a look on what's around you"
+    "title": "Home"
+  },
+  "events": {
+    "title": "Events"
   }
 }

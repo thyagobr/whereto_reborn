@@ -3,7 +3,9 @@
     "hello": "Ola!, {name}!"
   },
   "home": {
-    "title": "Casa",
-    "takeALook": "De uma olhadinha"
+    "title": "Principal"
+  },
+  "events": {
+    "title": "Eventos"
   }
 }

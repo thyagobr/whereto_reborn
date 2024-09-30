@@ -1,13 +1,13 @@
 "use client";
-import { PlacesList } from "@/components/lists/PlacesList/PlacesList";
+import { EventsList } from "@/components/lists/EventsList";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 
-export default function Home() {
+export default function Events() {
   const [searchText, setSearchText] = useState("");
-  const t = useTranslations("home");
+  const t = useTranslations("events");
 
   return (
     <div className="mx-4 mb-4">
@@ -15,13 +15,14 @@ export default function Home() {
         <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
         <Input
           type="search"
-          placeholder="Which place?"
+          placeholder="What are you looking for?"
           onChange={(ev) => setSearchText(ev.target.value)}
           className="pl-8"
         />
       </div>
 
-      <PlacesList searchText={searchText} />
+      <EventsList searchText={searchText} />
     </div>
   );
 }
+
