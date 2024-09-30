@@ -1,5 +1,5 @@
 import { CardSkeleton } from "@/components/CardSkeleton";
-import { PlaceCard } from "@/components/place_card";
+import { PlaceCard } from "@/components/PlaceCard";
 import { Button } from "@/components/ui/button";
 import { useGetPlaces } from "@/hooks/places/useGetPlaces";
 import Link from "next/link";

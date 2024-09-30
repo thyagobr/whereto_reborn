@@ -20,7 +20,7 @@ import { Separator } from "@/components/ui/separator"
 //     url: string;
 // }
 
-export function PlaceCard({ place = { id: 1 } }) {
+export function PlaceCard({ place }) {
   const router = useRouter();
   const place_clicked = (place) => {
     router.push(`/places/${place.id}`);

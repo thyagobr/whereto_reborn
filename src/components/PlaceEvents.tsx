@@ -11,19 +11,15 @@ export type IPlaceEvent = {
     Place?: Place;
 }
 
-export default function PlaceEvents({ events, showPlaceName, placeId }: { events?: IPlaceEvent[], showPlaceName?: boolean, placeId?: string }) {
+export const PlaceEvents = ({ place }) => {
     const [placeEvents, setPlaceEvents] = useState<IPlaceEvent[]>([]);
 
-    if (!placeId) return <><p>No placeId given.</p></>
+    if (!place.id) return <><p>No placeId given.</p></>
 
     useEffect(() => {
-        fetch(`http://localhost:3000/places/${placeId}/events`).then(res => res.json()).then(res => setPlaceEvents(res.events))
+        fetch(`http://localhost:3000/places/${place.id}/events`).then(res => res.json()).then(res => setPlaceEvents(res.events))
     }, [])
 
-    useEffect(() => {
-        console.log("events", events)
-    }, [events])
-    
     return <div className="flex flex-col justify-around gap-3 w-full">
         {placeEvents && placeEvents.length > 0 ? 
         placeEvents.map((event: any) => <PlaceEvent event={event} key={event.id} />) :
