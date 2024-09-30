@@ -6,6 +6,8 @@ const RobotoFont = Roboto({ weight: "300", subsets: ["latin"] });
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { PlaceEventsList } from "@/components/lists/PlaceEventsList/PlaceEventsList";
+import { Separator } from "@/components/ui/separator";
+import { Card } from "@/components/ui/card";
 
 export type PlaceAttributes = {
   name: string;
@@ -29,36 +31,36 @@ const PagesShow: NextPage = ({ params: { id } }: any) => {
       .then((res) => setPlace(res.data));
   }, [id]);
 
-  if (!place)
-    return (
-      <>
-        <h2>Place not found</h2>
-      </>
-    );
+  if (!place) {
+    return <h2>Place not found</h2>
+  }
+
   return (
     <>
-      <div
-        className={`flex flex-col items-center px-5 py-10 gap-3 ${RobotoFont.className}`}
-      >
-        <h2 className="text-center w-full text-2xl neon_cyan_text">
-          {place.name}
-        </h2>
-        <p className="text-center w-full text-sm">{place.address}</p>
-        <a
-          href={`https://www.google.com/maps/search/${place.name}+${place.address}`}
-          target="_blank"
-          className="text-center ml-2 text-cyan-200 text-sm"
+      <Card className="w-full max-w-[450px] mx-auto p-5">
+        <div
+          className={`flex flex-col items-center px-5 py-10 gap-3 ${RobotoFont.className}`}
         >
-          (maps)
-        </a>
-        <div className="flex mt-5 items-center justify-evenly gap-2">
-          {place.tags.map((tag) => (
-            <PlaceTag tag={tag} key={tag.id} />
-          ))}
+          <h2 className="text-center w-full text-2xl neon_cyan_text">
+            {place.name}
+          </h2>
+          <p className="text-center w-full text-sm">{place.address}</p>
+          <a
+            href={`https://www.google.com/maps/search/${place.name}+${place.address}`}
+            target="_blank"
+            className="text-center ml-2 text-cyan-200 text-sm"
+          >
+            (maps)
+          </a>
+          <div className="flex mt-5 items-center justify-evenly gap-2">
+            {place.tags.map((tag) => (
+              <PlaceTag tag={tag} key={tag.id} />
+            ))}
+          </div>
         </div>
-      </div>
+      </Card>
 
-      <div>
+      <div className="mt-10">
         <h2 className="text-center w-full text-2xl neon_cyan_text">Events</h2>
 
         <PlaceEventsList place={place} />

@@ -1,5 +1,8 @@
 import { IPlaceEvent } from "./place_events"
 import { useRouter } from "next/navigation";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 
 export default function PlaceEvent({ event, showPlaceName }: { event: IPlaceEvent, showPlaceName?: boolean }) {
     const { push } = useRouter();
@@ -26,11 +29,15 @@ export default function PlaceEvent({ event, showPlaceName }: { event: IPlaceEven
     }
 
     return (
-        <div className="w-full border-b pb-5">
-            <div className="flex flex-row w-full justify-between" onClick={() => event.Place && push(`places/${event.Place.id}`)}>
-                <p className="text-2xl neon_cyan_text ">{event.name}</p>
-                <p className={`${date_status()} inline-table text-right w-1/3`}><p>{start_at.toLocaleString("de-DE").split(",")[0]}</p></p>
-            </div>
-        </div >
+        <Card className="w-full text-left">
+            <CardHeader className="text-left">
+                <CardTitle>{event.name}</CardTitle>
+                <p>{event.start_at}</p>
+            </CardHeader>
+            <Separator className="mb-5" />
+            <CardContent>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonne merninisti licere mihi ista probare, quae sunt a te dicta? Duo Reges: constructio interrete. Quae cum dixisset paulumque institisset, Quid est? Quod autem in homine praestantissimum atque optimum est, id deseruit
+            </CardContent>
+        </Card>
     )
 }
