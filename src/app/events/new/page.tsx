@@ -3,17 +3,36 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
+import { cn } from "@/lib/utils"
 import { Form, FormField, FormControl, FormItem, FormLabel, FormMessage, } from "@/components/ui/form"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectGroup, SelectItem } from "@/components/ui/select"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useGetPlaces } from "@/hooks/places/useGetPlaces"
+import { Link } from "next/link"
+import { useRouter } from "next/navigation";
+import { Check, ChevronsUpDown } from "lucide-react"
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
 
 export default function NewEvent() {
-  const [place, setPlace] = useState(null);
+  const [selectedPlace, setSelectedPlace] = useState(null);
   const [showEventForm, setShowEventForm] = useState(false);
   const { places, error, isLoading } = useGetPlaces();
+  const [open, setOpen] = useState(false)
+  const router = useRouter()
 
   const form = useForm({
     defaultValues: {
@@ -24,17 +43,24 @@ export default function NewEvent() {
       tags: []
     },
   });
-  const { control, register, handleSubmit, formState: { errors } } = form
+  const { control, register, setValue, handleSubmit, formState: { errors } } = form
 
   const onSubmit = (data) => {
-    data['place_id'] = place.id;
     console.log("Form submitted", data);
   };
 
   const placeSelected = (place) => {
-    setPlace(places.find(p => p.id === place));
+    setSelectedPlace(places.find(p => p.id === place));
     setShowEventForm(true);
   }
+
+  useEffect(() => {
+    console.log("selectedPlace", selectedPlace);
+  }, [selectedPlace]);
+
+  useEffect(() => {
+    register("place_id")
+  }, [register])
 
   if (isLoading) {
     return <h1 className="text-white">Loading...</h1>;
@@ -43,18 +69,57 @@ export default function NewEvent() {
   return (
     <div className="w-full max-w-[450px] mx-auto">
       <div className="mb-10">
-        <Select onValueChange={(place) => placeSelected(place)}>
-          <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Select a place" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              {places.map((place) => (
-                <SelectItem key={place.id} value={place.id}>{place.name}</SelectItem>
-              ))}
-            </SelectGroup>
-          </SelectContent>
-        </Select>
+        <Popover open={open} onOpenChange={setOpen}>
+          <PopoverTrigger asChild>
+            <Button
+              variant="outline"
+              role="combobox"
+              aria-expanded={open}
+              className="w-[200px] justify-between"
+            >
+              {selectedPlace ? selectedPlace.name : "Select a place"}
+              <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-[200px] p-0">
+            <Command>
+              <CommandInput placeholder="Search for a place"/>
+              <CommandList>
+                <CommandEmpty>
+                  <p className="mb-4">No place found.</p>
+                  <Button onClick={() => router.push(`/places/new?backToEvents=true`)}>Create one?</Button>
+                </CommandEmpty>
+                <CommandGroup>
+                  {places.map((place) => (
+                    <CommandItem
+                      key={place.id}
+                      value={place.name}
+                      onSelect={(currentValue) => {
+                        console.log(currentValue)
+                        const place = places.find(p => p.name === currentValue)
+                        if (!place) {
+                          console.error("Place not found")
+                          return
+                        }
+                        setValue("place_id", place.id)
+                        placeSelected(place.id)
+                        setOpen(false)
+                      }}
+                    >
+                      <Check
+                        className={cn(
+                          "mr-2 h-4 w-4",
+                          selectedPlace && selectedPlace.id === place.id ? "opacity-100" : "opacity-0"
+                        )}
+                      />
+                      {place.name}
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+              </CommandList>
+            </Command>
+          </PopoverContent>
+        </Popover>
       </div>
 
       {showEventForm && (
