@@ -6,7 +6,7 @@ export const NewEventFormSchema = z.object({
     .string({ message: "Name of event is required" })
     .min(3, { message: "Name must be at least 3 characters long" }),
   start_at: z.string().min(1, { message: "Start date is required" }),
-  end_at: z.string().min(1, { message: "End date is required" }),
+  end_at: z.string().optional(),
   description: z.string({}).optional(),
   tags: z.array(z.string()).optional(),
 });

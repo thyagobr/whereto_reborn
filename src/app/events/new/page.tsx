@@ -18,7 +18,8 @@ import {
 import { useGetPlaces } from "@/hooks/places/useGetPlaces";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { useState, useEffect } from "react";
 
 export default function NewEvent() {
   const [selectedPlace, setSelectedPlace] = useState(null);
@@ -26,6 +27,17 @@ export default function NewEvent() {
   const [open, setOpen] = useState(false);
 
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const placeId = searchParams.get("placeId");
+
+  useEffect(() => {
+    if (places && placeId) {
+      const queryPlace = places.find((place) => place.id === Number(placeId));
+      if (queryPlace) {
+        setSelectedPlace(queryPlace);
+      }
+    }
+  }, [places]);
 
   if (isLoading) {
     return <h1 className="text-white">Loading...</h1>;

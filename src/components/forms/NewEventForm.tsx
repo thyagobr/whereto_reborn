@@ -13,6 +13,7 @@ import {
 import { Input } from "../ui/input";
 import { NewEventFormSchema } from "./schemas/NewEventFormSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 
 export const NewEventForm = ({ placeId = undefined }) => {
   const form = useForm<NewEventFormSchema>({
@@ -24,6 +25,8 @@ export const NewEventForm = ({ placeId = undefined }) => {
       description: "",
     },
   });
+
+  const router = useRouter();
 
   const {
     handleSubmit,
@@ -37,6 +40,28 @@ export const NewEventForm = ({ placeId = undefined }) => {
     };
 
     console.log("Form submitted", dataToSubmit);
+    saveEvent(dataToSubmit);
+  };
+
+  const saveEvent = async (data) => {
+    const event = {
+      name: data.name,
+      place_id: data.place_id,
+      start_at: data.start_at,
+      end_at: data.end_at,
+      description: data.description
+    };
+    const response = await fetch("http://localhost:3000/events", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(event),
+    });
+    if (response.ok) {
+      const responseData = await response.json();
+      router.push(`/events/${responseData.id}`);
+    }
   };
 
   return (

@@ -20,7 +20,7 @@ export const PlaceEventsList = ({ place }) => {
     return (
       <div className="flex flex-col gap-4 w-full max-w-[450px] text-center mx-auto mt-10">
         <p>No events for {place.name}</p>
-        <Link href={`/places/${placeId}/events/new`} className="mt-5">
+        <Link href={`/events/new?placeId=${placeId}`} className="mt-5">
           <Button>
             Want to create one?
           </Button>
@@ -32,7 +32,7 @@ export const PlaceEventsList = ({ place }) => {
   return (
     <div className="flex flex-col gap-4 w-full max-w-[450px] text-center mx-auto mt-10">
       <div className="flex flex-col items-center mt-10">
-        <Link href={`/places/${placeId}/events/new`} className="mb-1">
+        <Link href={`/events/new?placeId=${placeId}`} className="mb-1">
           <Button>
             Create new event
           </Button>
