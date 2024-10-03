@@ -1,44 +1,64 @@
 "use client"
 import { NextPage } from "next";
 import { useState } from "react";
-import { Roboto } from "next/font/google";
-const RobotoFont = Roboto({ weight: "300", subsets: ["latin"] });
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
+import { useForm } from "react-hook-form";
 
 const PagesNew: NextPage = () => {
   const router = useRouter();
-  const search_text_name = router?.query?.name;
-  const [name, set_name] = useState(search_text_name || "");
-  const [address, set_address] = useState("");
-  const [current_tag, set_current_tag] = useState("");
-  const [tags, set_tags] = useState([]);
-  const add_tag = (ev: React.KeyboardEvent<HTMLInputElement>) => {
-    if (ev.key === "Enter") {
-      set_tags([...tags, { text: current_tag }]);
-      set_current_tag("");
-    }
-  };
-  // const create_place = api.places.create.useMutation({})
-  // const save_place = () => {
-  //     create_place.mutate({
-  //         name,
-  //         address,
-  //         tags,
-  //         events: []
-  //     })
-  //     reset_form()
-  // }
-  const reset_form = () => {
-    set_name("");
-    set_address("");
-    set_tags([]);
-    set_current_tag("");
-  };
+  const [tags, setTags] = useState([]);
 
-  const save_place = async () => {
+  const form = useForm({
+    defaultValues: {
+      name: "",
+      address: "",
+      tags: "",
+    },
+  });
+  const {
+    handleSubmit,
+    formState: { isSubmitting },
+  } = form;
+  const onSubmit = (data) => {
+    data.tags = tags;
+    console.log(data)
+    savePlace(data);
+  }
+  const currentTag = form.watch("tags");
+  // When there is a comma in the tag input, we
+  // add the tag to the list of tags
+  const checkForCommas = (ev: React.ChangeEvent<HTMLInputElement>) => {
+    if (ev.target.value.includes(",")) {
+      addTag();
+    }
+  }
+  const addTag = () => {
+    setTags([...tags, { text: currentTag.split(",")[0] }]);
+    form.setValue("tags", "");
+  };
+  const removeTag = (ev) => {
+    const tag = ev.target.textContent;
+    setTags(tags.filter((t) => t.text !== tag));
+  }
+  const resetForm = () => {
+    form.reset();
+    setTags([]);
+  }
+  const savePlace = async (data) => {
     const place = {
-      name,
-      address,
+      name: data.name,
+      address: data.address,
       tags,
     };
     const response = await fetch("http://localhost:3000/places", {
@@ -49,44 +69,81 @@ const PagesNew: NextPage = () => {
       body: JSON.stringify(place),
     });
     if (response.ok) {
-      reset_form();
+      const responseData = await response.json();
+      router.push(`/places/${responseData.id}`);
     }
   };
 
   return (
-    <div
-      className={`flex flex-col items-center px-5 py-10 gap-3 ${RobotoFont.className}`}
-    >
-      <h1 className="text-2xl">Place information</h1>
-      <div className="form">
-        <div className="form-group">
-          <label htmlFor="place_name">Name</label>
-          <input
-            type="text"
-            onChange={(ev) => set_name(ev.target.value)}
-            value={name}
-            className="rounded-xl px-2"
+    <div className="w-full max-w-[450px] mx-auto">
+      <h1 className="text-2xl mb-4">Place information</h1>
+      <Form {...form}>
+        <form
+          id="event-form"
+          onSubmit={handleSubmit(onSubmit)}
+          className="flex flex-col gap-4"
+        >
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem className="flex flex-col gap-2">
+                <FormLabel>Place name</FormLabel>
+                <FormControl>
+                  <Input
+                    id="name"
+                    placeholder="Place name..."
+                    type="text"
+                    autoCapitalize="none"
+                    autoCorrect="off"
+                    disabled={isSubmitting}
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
           />
-        </div>
 
-        <div className="form-group">
-          <label htmlFor="place_address">Address</label>
-          <input
-            type="text"
-            className="rounded-xl px-2"
-            onChange={(ev) => set_address(ev.target.value)}
-            value={address}
+          <FormField
+            control={form.control}
+            name="address"
+            render={({ field }) => (
+              <FormItem className="flex flex-col gap-2">
+                <FormLabel>Address</FormLabel>
+                <FormControl>
+                  <Input
+                    id="address"
+                    type="text"
+                    disabled={isSubmitting}
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
           />
-        </div>
 
-        <div className="form-group flex gap-2">
-          <label htmlFor="place-tags">Tags</label>
-          <input
-            type="text"
-            className="rounded-xl px-2"
-            onChange={(ev) => set_current_tag(ev.target.value)}
-            onKeyUp={(ev) => add_tag(ev)}
-            value={current_tag}
+          <FormField
+            control={form.control}
+            name="tags"
+            render={({ field }) => (
+              <FormItem className="flex flex-col gap-2">
+                <FormLabel>Tags (type comma "," to add the tag to the list)</FormLabel>
+                <FormControl>
+                  <Input
+                    id="tags"
+                    type="text"
+                    disabled={isSubmitting}
+                    {...field}
+                    onChange={(e) => {
+                      field.onChange(e)
+                      checkForCommas(e)
+                    }}
+                  />
+                </FormControl>
+              </FormItem>
+            )}
           />
           <ul className="flex flex-row gap-3">
             {tags.map((tag, index) => {
@@ -95,22 +152,16 @@ const PagesNew: NextPage = () => {
                   key={index}
                   className="px-1 py-1 neon_border_purple neon_cyan_text"
                 >
-                  {tag.text}
+                  <Badge onClick={removeTag}>{tag.text}</Badge>
                 </li>
               );
             })}
           </ul>
-        </div>
-
-        <div className="form-group gap-3 mt-10">
-          <button
-            className="neon_border_purple neon_cyan_text p-2"
-            onClick={save_place}
-          >
-            Save Place
-          </button>
-        </div>
-      </div>
+          <Button type="submit">
+            Add place
+          </Button>
+        </form>
+      </Form>
     </div>
   );
 };
