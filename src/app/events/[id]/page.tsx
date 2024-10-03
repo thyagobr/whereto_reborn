@@ -12,7 +12,6 @@ export default function ShowEvent({ params }) {
   const { events, error, isLoading } = useGetEvent(id);
 
   useEffect(() => {
-    console.log(events);
     if (!events) return;
     setEvent(events[0]);
   }, [events]);

@@ -21,8 +21,6 @@ export type TagAttributes = {
 };
 
 const PagesShow: NextPage = ({ params: { id } }: any) => {
-  console.log(id);
-
   const [place, setPlace] = useState(null);
   useEffect(() => {
     if (!id) return;

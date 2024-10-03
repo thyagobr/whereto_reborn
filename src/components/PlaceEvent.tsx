@@ -32,11 +32,11 @@ export default function PlaceEvent({ event, showPlaceName }: { event: IPlaceEven
         <Card className="w-full text-left">
             <CardHeader className="text-left">
                 <CardTitle>{event.name}</CardTitle>
-                <p>{event.start_at}</p>
+                <p>{event.date}</p>
             </CardHeader>
             <Separator className="mb-5" />
             <CardContent>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonne merninisti licere mihi ista probare, quae sunt a te dicta? Duo Reges: constructio interrete. Quae cum dixisset paulumque institisset, Quid est? Quod autem in homine praestantissimum atque optimum est, id deseruit
+                {event.description}
             </CardContent>
         </Card>
     )
