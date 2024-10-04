@@ -13,7 +13,7 @@ export const PlacesList = ({ searchText }) => {
 
   if (isLoading) {
     return (
-      <div className="mt-10 gap-4 flex flex-col">
+      <div className="mt-6 gap-4 flex flex-col">
         <CardSkeleton />
         <CardSkeleton />
         <CardSkeleton />
@@ -33,7 +33,7 @@ export const PlacesList = ({ searchText }) => {
 
   if (filteredPlaces.length == 0 || !places) {
     return (
-      <div className="mt-10 flex flex-col gap-3 items-center">
+      <div className="mt-6 flex flex-col gap-3 items-center">
         <h3>{`No places called ${searchText}.`}</h3>
         <Link href={`/places/new?name=${searchText}`}>
           <Button>Want to create one?</Button>
@@ -43,7 +43,7 @@ export const PlacesList = ({ searchText }) => {
   }
 
   return (
-    <div className="flex flex-col items-center mt-10 gap-4">
+    <div className="flex flex-col items-center mt-6 gap-4">
       {filteredPlaces.map((place) => (
         <PlaceCard key={place.id} place={place} />
       ))}

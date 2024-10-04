@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import { Header } from "@/components/header";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
+import { Toaster } from "sonner";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -42,6 +43,7 @@ export default async function RootLayout({
             disableTransitionOnChange
           >
             <Header />
+            <Toaster position="top-right" />
             {children}
           </ThemeProvider>
         </NextIntlClientProvider>

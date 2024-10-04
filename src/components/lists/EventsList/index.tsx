@@ -11,6 +11,8 @@ export const EventsList = ({ searchText }) => {
     return <h1 className="text-white">The server is not responding</h1>;
   }
 
+  console.log(events);
+
   if (isLoading) {
     return (
       <div className="mt-10 gap-4 flex flex-col">

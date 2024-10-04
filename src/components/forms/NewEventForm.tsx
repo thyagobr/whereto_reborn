@@ -1,6 +1,9 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { Button } from "../ui/button";
 import {
   Form,
@@ -12,8 +15,6 @@ import {
 } from "../ui/form";
 import { Input } from "../ui/input";
 import { NewEventFormSchema } from "./schemas/NewEventFormSchema";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
 
 export const NewEventForm = ({ placeId = undefined }) => {
   const form = useForm<NewEventFormSchema>({
@@ -34,6 +35,7 @@ export const NewEventForm = ({ placeId = undefined }) => {
   } = form;
 
   const onSubmit = (data: NewEventFormSchema) => {
+    if (isSubmitting) return;
     const dataToSubmit = {
       ...data,
       place_id: placeId,
@@ -43,25 +45,36 @@ export const NewEventForm = ({ placeId = undefined }) => {
     saveEvent(dataToSubmit);
   };
 
-  const saveEvent = async (data) => {
+  const saveEvent = (data) => {
     const event = {
       name: data.name,
       place_id: data.place_id,
       start_at: data.start_at,
       end_at: data.end_at,
-      description: data.description
+      description: data.description,
     };
-    const response = await fetch("http://localhost:3000/events", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(event),
-    });
-    if (response.ok) {
-      const responseData = await response.json();
-      router.push(`/events/${responseData.id}`);
-    }
+
+    toast.promise(
+      fetch("http://localhost:3000/events", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(event),
+      }),
+      {
+        loading: "Adding new event...",
+        success: async (data) => {
+          const responseData = await data.json();
+          router.push(`/events/${responseData.id}`);
+
+          return "Successfully added new event";
+        },
+        error: (error) => {
+          return error.message;
+        },
+      }
+    );
   };
 
   return (
@@ -153,7 +166,7 @@ export const NewEventForm = ({ placeId = undefined }) => {
           )}
         />
 
-        <Button type="submit" className="mt-5">
+        <Button type="submit" className="mt-5" disabled={isSubmitting}>
           Submit
         </Button>
       </form>
