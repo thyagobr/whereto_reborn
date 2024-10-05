@@ -13,7 +13,7 @@ export const PlacesList = ({ searchText }) => {
 
   if (isLoading) {
     return (
-      <div className="mt-6 gap-4 flex flex-col">
+      <div className="mt-6 gap-4 flex flex-col border-slate-800 border-b-[1px]">
         <CardSkeleton />
         <CardSkeleton />
         <CardSkeleton />
@@ -43,7 +43,7 @@ export const PlacesList = ({ searchText }) => {
   }
 
   return (
-    <div className="flex flex-col items-center mt-6 gap-4">
+    <div className="flex flex-col items-center">
       {filteredPlaces.map((place) => (
         <PlaceCard key={place.id} place={place} />
       ))}

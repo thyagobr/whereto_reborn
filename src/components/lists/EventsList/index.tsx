@@ -8,7 +8,8 @@ import { useSearchParams } from "next/navigation";
 export const EventsList = ({ searchText }) => {
   const { events, error, isLoading } = useGetEvents();
   const searchParams = useSearchParams();
-  const filterInterest = searchParams.get("interests")?.toLowerCase() === "true";
+  const filterInterest =
+    searchParams.get("interests")?.toLowerCase() === "true";
 
   if (error) {
     return <h1 className="text-white">The server is not responding</h1>;
@@ -16,7 +17,7 @@ export const EventsList = ({ searchText }) => {
 
   if (isLoading) {
     return (
-      <div className="mt-10 gap-4 flex flex-col">
+      <div className="mt-6 gap-4 flex flex-col border-slate-800 border-b-[1px]">
         <CardSkeleton />
         <CardSkeleton />
         <CardSkeleton />
@@ -26,12 +27,11 @@ export const EventsList = ({ searchText }) => {
   }
 
   const filteredEvents = events.filter((event) => {
-    let shouldReturnEvent = (
+    const shouldReturnEvent =
       event.name.toLowerCase().indexOf(searchText.toLowerCase()) != -1 ||
       event.place.tags.some(
         (tag) => tag.text.toLowerCase().indexOf(searchText.toLowerCase()) != -1
-      )
-    );
+      );
     if (filterInterest) {
       return event.interested && shouldReturnEvent;
     } else {
@@ -51,11 +51,10 @@ export const EventsList = ({ searchText }) => {
   }
 
   return (
-    <div className="flex flex-col items-center mt-10 gap-4">
+    <div className="flex flex-col items-center">
       {filteredEvents.map((event) => (
         <EventCard key={event.id} event={event} />
       ))}
     </div>
   );
 };
-

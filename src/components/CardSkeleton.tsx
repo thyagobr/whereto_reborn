@@ -5,7 +5,7 @@ import { Skeleton } from "./ui/skeleton";
 export const CardSkeleton = () => {
   return (
     <div className="flex items-center justify-center">
-      <Card className="w-full max-w-[450px]">
+      <Card className="w-full max-w-[600px] cursor-pointer border-slate-800  border-0 border-t-[1px] border-r-0 rounded-none">
         <CardHeader>
           <CardTitle>
             <Skeleton className="h-4 w-[200px] my-2" />

@@ -29,7 +29,7 @@ export function PlaceCard({ place }) {
   return (
     <Card
       key={place.id}
-      className="w-full max-w-[450px] cursor-pointer"
+      className="w-full max-w-[600px] cursor-pointer border-slate-800  border-0 border-t-[1px] border-r-0 rounded-none"
       onClick={() => place_clicked(place)}
     >
       <CardHeader>

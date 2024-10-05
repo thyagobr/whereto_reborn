@@ -6,6 +6,7 @@ import { Header } from "@/components/header";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { Toaster } from "sonner";
+import { BottomNavigationMenu } from "@/components/BottomNavigationMenu/BottomNavigationMenu";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -45,6 +46,7 @@ export default async function RootLayout({
             <Header />
             <Toaster position="top-right" />
             {children}
+            <BottomNavigationMenu />
           </ThemeProvider>
         </NextIntlClientProvider>
       </body>
