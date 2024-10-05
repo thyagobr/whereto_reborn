@@ -3,15 +3,16 @@ import { EventCard } from "@/components/EventCard";
 import { Button } from "@/components/ui/button";
 import { useGetEvents } from "@/hooks/events/useGetEvents";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 
 export const EventsList = ({ searchText }) => {
   const { events, error, isLoading } = useGetEvents();
+  const searchParams = useSearchParams();
+  const filterInterest = searchParams.get("interests")?.toLowerCase() === "true";
 
   if (error) {
     return <h1 className="text-white">The server is not responding</h1>;
   }
-
-  console.log(events);
 
   if (isLoading) {
     return (
@@ -25,12 +26,17 @@ export const EventsList = ({ searchText }) => {
   }
 
   const filteredEvents = events.filter((event) => {
-    return (
+    let shouldReturnEvent = (
       event.name.toLowerCase().indexOf(searchText.toLowerCase()) != -1 ||
       event.place.tags.some(
         (tag) => tag.text.toLowerCase().indexOf(searchText.toLowerCase()) != -1
       )
     );
+    if (filterInterest) {
+      return event.interested && shouldReturnEvent;
+    } else {
+      return shouldReturnEvent;
+    }
   });
 
   if (filteredEvents.length == 0 || !events) {

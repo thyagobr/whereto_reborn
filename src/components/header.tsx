@@ -8,6 +8,7 @@ import {
   NavigationMenuList,
   navigationMenuTriggerStyle,
 } from "./ui/navigation-menu";
+import { Eye } from "lucide-react";
 
 export const Header = () => {
   return (
@@ -26,6 +27,13 @@ export const Header = () => {
               <Link href="/events" legacyBehavior passHref>
                 <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                   Events
+                </NavigationMenuLink>
+              </Link>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <Link href="/events?interests=true" legacyBehavior passHref>
+                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                  <Eye className="h-5 w-5" />
                 </NavigationMenuLink>
               </Link>
             </NavigationMenuItem>
