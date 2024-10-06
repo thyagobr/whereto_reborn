@@ -1,9 +1,8 @@
 "use client";
 import {
   Sheet,
-  SheetClose,
   SheetContent,
-  SheetFooter,
+  SheetDescription,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
@@ -28,15 +27,13 @@ export const DrawerMenu = () => {
       <SheetTrigger asChild>
         <AlignJustify className="m-1" color="#8c9eb2" />
       </SheetTrigger>
-      <SheetContent side="left">
+      <SheetContent side="left" aria-describedby="Menu">
         <SheetHeader>
-          <SheetTitle>
-            <UserBadge />
-            <h3 className="w-fit mt-4">Meu nome</h3>
-            <p className="w-fit mt-1 font-light text-slate-500 text-xs">
-              e-mail@mail.com
-            </p>
-          </SheetTitle>
+          <UserBadge />
+          <SheetTitle className="text-left">Meu nome</SheetTitle>
+          <p className="w-fit mt-1 font-light text-slate-500 text-xs">
+            e-mail@mail.com
+          </p>
         </SheetHeader>
         <div className="flex flex-col gap-4 py-4 mt-1">
           <Separator />
@@ -71,9 +68,7 @@ export const DrawerMenu = () => {
             </Button>
           </div>
         </div>
-        <SheetFooter>
-          <SheetClose asChild></SheetClose>
-        </SheetFooter>
+        <SheetDescription className="">NightCrawl app - 2024</SheetDescription>
       </SheetContent>
     </Sheet>
   );

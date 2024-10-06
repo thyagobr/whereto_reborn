@@ -1,5 +1,6 @@
 "use client";
 
+import { Backlink } from "@/components/Backlink/Backlink";
 import { NewEventForm } from "@/components/forms/NewEventForm";
 import { PageLoadSpinner } from "@/components/PageLoadSpinner";
 import { Button } from "@/components/ui/button";
@@ -45,6 +46,9 @@ export default function NewEvent() {
 
   return (
     <div className="w-full max-w-[450px] mx-auto mt-4">
+      <div className="ml-1">
+        <Backlink />
+      </div>
       <div className="mx-3">
         <div className="mb-6 mx-auto max-w-[286px]">
           <Popover open={open} onOpenChange={setOpen}>
