@@ -35,7 +35,7 @@ export default function Events() {
         </Button>
       </div>
       {/* Feed */}
-      <div className="md:border-slate-800 md:border-x-[1px] w-full max-w-[600px] mx-auto mt-3">
+      <div className="md:border-slate-800 md:border-x-[1px] border-b-[1px] w-full max-w-[600px] mx-auto mt-3">
         <EventsList searchText={searchText} />
       </div>
     </div>
