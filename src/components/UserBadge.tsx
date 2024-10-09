@@ -2,7 +2,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
 export const UserBadge = () => {
   return (
-    <Avatar >
+    <Avatar className="w-12 h-12">
       <AvatarImage
         sizes="200"
         src="https://avatars.githubusercontent.com/u/4836353?v=4"

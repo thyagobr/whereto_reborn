@@ -7,6 +7,8 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { Toaster } from "sonner";
 import { BottomNavigationMenu } from "@/components/BottomNavigationMenu/BottomNavigationMenu";
+import { DesktopMenu } from "@/components/DesktopMenu/DesktopMenu";
+import { Recommendations } from "@/components/Recommendations/Recommendations";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -44,9 +46,13 @@ export default async function RootLayout({
             disableTransitionOnChange
           >
             <Header />
-            <Toaster position="top-right" />
-            {children}
+            <div className="grid grid-flow-col">
+              <DesktopMenu />
+              {children}
+              <Recommendations />
+            </div>
             <BottomNavigationMenu />
+            <Toaster position="top-right" />
           </ThemeProvider>
         </NextIntlClientProvider>
       </body>
