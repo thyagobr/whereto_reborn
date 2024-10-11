@@ -13,6 +13,7 @@ import {
 } from "../ui/form";
 import { Input } from "../ui/input";
 import { NewPlaceFormSchema } from "./schemas/NewPlaceFormSchema";
+import { useCreatePlace } from "@/hooks/places/useCreatePlace";
 
 export const NewPlaceForm = () => {
   const form = useForm({
@@ -30,18 +31,11 @@ export const NewPlaceForm = () => {
   } = form;
   const router = useRouter();
 
+  const { trigger } = useCreatePlace();
+
   const savePlace = async (data) => {
-    const response = await fetch("http://localhost:3000/places", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
-    if (response.ok) {
-      const responseData = await response.json();
-      router.push(`/places/${responseData.id}`);
-    }
+    const response = await trigger(data);
+    router.push(`/places/${response.id}`);
   };
 
   return (

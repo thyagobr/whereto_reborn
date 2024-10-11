@@ -5,7 +5,7 @@ const fetcher = async ({ url, params }, data?) => {
   let body;
   const headers = {
     // Authorization: `Bearer ${token}`,
-    // "ngrok-skip-browser-warning": "69420"
+    // "ngrok-skip-browser-warning": "1337420"
   } as any;
 
   // const containsFile = data?.arg ? Object.values(data?.arg).some(value => value instanceof File) : false;
@@ -15,10 +15,8 @@ const fetcher = async ({ url, params }, data?) => {
   //     formData.append(key, data.arg[key]);
   //   });
   //   body = formData;
-  // } else {
-  //   body = data ? JSON.stringify(data?.arg) : null;
-  //   headers["Content-Type"] = "application/json";
-  // }
+  body = data ? JSON.stringify(data?.arg) : null;
+  headers["Content-Type"] = "application/json";
 
   if (fullUrl.includes("undefined")) return null;
 

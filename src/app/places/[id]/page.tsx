@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { PlaceEventsList } from "@/components/lists/PlaceEventsList/PlaceEventsList";
 import { Separator } from "@/components/ui/separator";
 import { Card } from "@/components/ui/card";
+import { useGetPlaces } from "@/hooks/places/useGetPlaces";
 
 export type PlaceAttributes = {
   name: string;
@@ -21,17 +22,17 @@ export type TagAttributes = {
 };
 
 const PagesShow: NextPage = ({ params: { id } }: any) => {
-  const [place, setPlace] = useState(null);
-  useEffect(() => {
-    if (!id) return;
-    fetch(`http://localhost:3000/places/${id}`)
-      .then((res) => res.json())
-      .then((res) => setPlace(res.data));
-  }, [id]);
+  const { places, isLoading } = useGetPlaces({ id });
 
-  if (!place) {
+  if (!places || places.length === 0) {
     return <h2>Place not found</h2>
   }
+
+  if (isLoading) {
+    return <h2>Loading...</h2>
+  }
+
+  const place = places[0];
 
   return (
     <>

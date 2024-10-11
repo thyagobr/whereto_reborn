@@ -15,6 +15,7 @@ import {
 } from "../ui/form";
 import { Input } from "../ui/input";
 import { NewEventFormSchema } from "./schemas/NewEventFormSchema";
+import { useCreateEvent } from "@/hooks/events/useCreateEvent";
 
 export const NewEventForm = ({ placeId = undefined }) => {
   const form = useForm<NewEventFormSchema>({
@@ -33,6 +34,8 @@ export const NewEventForm = ({ placeId = undefined }) => {
     handleSubmit,
     formState: { isSubmitting },
   } = form;
+
+  const { trigger } = useCreateEvent(placeId);
 
   const onSubmit = (data: NewEventFormSchema) => {
     if (isSubmitting) return;
@@ -55,22 +58,17 @@ export const NewEventForm = ({ placeId = undefined }) => {
     };
 
     toast.promise(
-      fetch("http://localhost:3000/events", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(event),
-      }),
+      trigger(event)
+      ,
       {
         loading: "Adding new event...",
         success: async (data) => {
-          const responseData = await data.json();
-          router.push(`/events/${responseData.id}`);
+          router.push(`/events/${data.id}`);
 
           return "Successfully added new event";
         },
         error: (error) => {
+          console.log(error);
           return error.message;
         },
       }
