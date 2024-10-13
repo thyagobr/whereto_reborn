@@ -1,4 +1,3 @@
-
 import fetcher from "@/services/fetcher";
 import useSWR from "swr";
 
@@ -12,4 +11,3 @@ export const useGetEvent = (id) => {
 
   return { events: data?.events, error, isLoading };
 }
-

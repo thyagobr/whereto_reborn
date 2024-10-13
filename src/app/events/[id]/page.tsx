@@ -4,10 +4,12 @@ import { useGetEvent } from "@/hooks/events/useGetEvent";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { PlaceTag } from "@/components/place_tag";
+import { Chat } from "@/components/chat";
 
 export default function ShowEvent({ params }) {
   const { id } = params;
   const [event, setEvent] = useState(null);
+  const [chat, setChat] = useState(null);
 
   const { events, error, isLoading } = useGetEvent(id);
 
@@ -25,7 +27,7 @@ export default function ShowEvent({ params }) {
   }
 
   return (
-    <>
+    <div className="flex flex-col">
       <Card className="w-full max-w-[450px] mx-auto p-5">
         <div className="flex flex-col items-center px-5 py-10 gap-3">
           <h2 className="text-center w-full text-2xl neon_cyan_text">
@@ -48,6 +50,7 @@ export default function ShowEvent({ params }) {
           </div>
         </div>
       </Card>
-    </>
+      <Chat chatableId={event.id} chatableType='Event' />
+    </div>
   );
 }
