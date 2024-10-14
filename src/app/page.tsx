@@ -1,12 +1,12 @@
 "use client";
+import { FeedTabs } from "@/components/Feed/FeedTabs/FeedTabs";
 import { PlacesList } from "@/components/lists/PlacesList/PlacesList";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
-import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import { FeedTabs } from "@/components/Feed/FeedTabs/FeedTabs";
+import { useState } from "react";
 
 export default function Home() {
   const [searchText, setSearchText] = useState("");
