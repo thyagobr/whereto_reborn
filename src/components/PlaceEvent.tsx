@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import Link from "next/link";
 
 export default function PlaceEvent({ event, showPlaceName }: { event: IPlaceEvent, showPlaceName?: boolean }) {
     const { push } = useRouter();
@@ -31,7 +32,11 @@ export default function PlaceEvent({ event, showPlaceName }: { event: IPlaceEven
     return (
         <Card className="w-full text-left">
             <CardHeader className="text-left">
-                <CardTitle>{event.name}</CardTitle>
+                <CardTitle>
+                    <Link href={`/events/${event.id}`}>
+                        {event.name}
+                    </Link>
+                </CardTitle>
                 <p>{event.date}</p>
             </CardHeader>
             <Separator className="mb-5" />
