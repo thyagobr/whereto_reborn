@@ -1,14 +1,14 @@
 import fetcher from "@/services/fetcher";
 import useSWR from "swr";
 
-export const useGetChat = ({ chatable_type, chatable_id }) => {
-  const { data, error, isLoading } = useSWR(
+export const useGetChat = ({ chatableType, chatableId }) => {
+  const { data, error, isLoading, mutate } = useSWR(
     {
-      url: `/chats/${chatable_type}/${chatable_id}`,
+      url: `/chats/${chatableType}/${chatableId}`,
     },
     fetcher
   );
 
-  return { chat: data, error, isLoading };
+  return { chat: data?.data, error, isLoading, mutate };
 }
 

@@ -3,37 +3,26 @@
 import { ChatBubble } from "./ChatBubble";
 import { Button } from "@/components/ui/button";
 import { useCreateChatMessage } from "@/hooks/chats/useCreateChatMessage";
+import { useGetChat } from "@/hooks/chats/useGetChat";
 import { useState } from "react";
 
-export const Chat = ({ chateableId, chateableType }) => {
+export const Chat = ({ chatableId, chatableType }) => {
 
-  const { trigger: chatMessageTrigger } = useCreateChatMessage({ chateableId, chateableType });
+  const { chat, error, isLoading, mutate } = useGetChat({ chatableId, chatableType });
+  const { trigger: chatMessageTrigger } = useCreateChatMessage({ chatableId, chatableType });
 
   const [message, setMessage] = useState("");
 
-  const saveMessage = () => {
-    debugger
+  const saveMessage = async () => {
     const payload = {
       userId: 1,
-      message: message
+      content: message
     };
 
-    chatMessageTrigger(payload);
+    await chatMessageTrigger(payload);
     setMessage("");
+    mutate();
   }
-
-  const messages = [
-    {
-      username: "Thyago",
-      message: "Hello",
-      time: "12:00",
-    },
-    {
-      username: "Jane Doe",
-      message: "Hi",
-      time: "12:01",
-    },
-  ];
 
   return (
     <div className="w-full max-w-[450px] mx-auto mt-5">
@@ -50,15 +39,15 @@ export const Chat = ({ chateableId, chateableType }) => {
           placeholder="Type a message..." />
         <Button
           className="w-full rounded"
-          onClick={() => saveMessage()}
+          onClick={async () => await saveMessage()}
         >Send</Button>
       </div>
-      {messages.map((message, index) => (
+      {chat && chat.messages.map((message, index) => (
         <ChatBubble
           key={index}
           me={message.username === "Thyago"}
-          username={message.username}
-          message={message.message}
+          username={message.user_name}
+          message={message.content}
           time={message.time}
         />
       ))}

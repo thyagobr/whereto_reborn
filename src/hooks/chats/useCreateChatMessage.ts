@@ -1,10 +1,10 @@
 import fetcher from "@/services/fetcher";
 import useSWRMutation from "swr/mutation";
 
-export const useCreateChatMessage = ({ chatable_type, chatable_id }) => {
+export const useCreateChatMessage = ({ chatableType, chatableId }) => {
   const { trigger, isLoading } = useSWRMutation(
     {
-      url: `/chats/${chatable_type}/${chatable_id}/messages`,
+      url: `/chats/${chatableType}/${chatableId}/messages`,
       params: {
         method: "POST",
       },
