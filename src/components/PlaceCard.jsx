@@ -1,8 +1,7 @@
+import { Separator } from "@/components/ui/separator";
 import { useRouter } from "next/navigation";
 import { PlaceTag } from "./place_tag";
-import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
-import { Separator } from "@/components/ui/separator";
 
 // export type Place = {
 //     id?: string;
@@ -34,9 +33,7 @@ export function PlaceCard({ place }) {
     >
       <CardHeader>
         <CardTitle>
-          <h2 className="text-2xl neon_cyan_text text-ellipsis overflow-hidden truncate">
-            {place.name}
-          </h2>
+          <h2 className="text-2xl line-clamp-1">{place.name}</h2>
         </CardTitle>
       </CardHeader>
       <CardContent>
