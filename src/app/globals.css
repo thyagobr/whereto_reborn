@@ -6,6 +6,10 @@ body {
   font-family: Roboto, Arial, Helvetica, sans-serif;
 }
 
+.text-destructive {
+  @apply text-red-500;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;

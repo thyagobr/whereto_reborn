@@ -2,7 +2,7 @@ import { ProtectedLayout } from "./ProtectedLayout";
 import { UnprotectedLayout } from "./UnprotectedLayout";
 
 export const LayoutSelector = ({ children, session }) => {
-  if (session?.user?.token)
+  if (session?.user?.data?.token)
     return <ProtectedLayout>{children}</ProtectedLayout>;
 
   return <UnprotectedLayout>{children}</UnprotectedLayout>;
