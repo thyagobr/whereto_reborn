@@ -7,16 +7,18 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { AlignJustify, Home, MapPin, Ticket } from "lucide-react";
+import { AlignJustify, Home, LogOut, MapPin, Ticket } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { UserBadge } from "../UserBadge";
 import { Button } from "../ui/button";
 import { Separator } from "../ui/separator";
+import { signOut, useSession } from "next-auth/react";
 
 export const DrawerMenu = () => {
   const [open, setOpen] = useState(false);
   const router = useRouter();
+  const session = useSession();
 
   const navigate = (url: string) => {
     router.push(url);
@@ -27,12 +29,18 @@ export const DrawerMenu = () => {
       <SheetTrigger asChild>
         <AlignJustify className="m-1" color="#8c9eb2" />
       </SheetTrigger>
-      <SheetContent side="left" aria-describedby="Menu">
+      <SheetContent
+        side="left"
+        aria-describedby="Menu"
+        className="flex flex-col"
+      >
         <SheetHeader>
           <UserBadge />
-          <SheetTitle className="text-left">Meu nome</SheetTitle>
-          <p className="w-fit mt-1 font-light text-slate-500 text-xs">
-            e-mail@mail.com
+          <SheetTitle className="text-left">
+            {session?.data?.user?.data?.name}
+          </SheetTitle>
+          <p className="w-fit mt-1 font-light text-slate-600 text-xs">
+            {session?.data?.user?.data?.email}
           </p>
         </SheetHeader>
         <div className="flex flex-col gap-4 py-4 mt-1">
@@ -67,8 +75,20 @@ export const DrawerMenu = () => {
               <p className="font-bold text-lg text-slate-500">Events</p>
             </Button>
           </div>
+          <div className="w-full">
+            <Button
+              onClick={() => signOut()}
+              className="w-full justify-start gap-3 pl-0 mt-2"
+              variant="ghost"
+            >
+              <p className="font-bold text-sm text-slate-500">Log Out</p>
+              <LogOut color="#64748b" size={15} />
+            </Button>
+          </div>
         </div>
-        <SheetDescription className="">NightCrawl app - 2024</SheetDescription>
+        <SheetDescription className="mt-auto text-muted">
+          NightCrawl app - 2024
+        </SheetDescription>
       </SheetContent>
     </Sheet>
   );
