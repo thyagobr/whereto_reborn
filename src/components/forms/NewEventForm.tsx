@@ -25,6 +25,7 @@ export const NewEventForm = ({ placeId = undefined }) => {
       start_at: "",
       end_at: "",
       description: "",
+      public: false
     },
   });
 
@@ -55,6 +56,7 @@ export const NewEventForm = ({ placeId = undefined }) => {
       start_at: data.start_at,
       end_at: data.end_at,
       description: data.description,
+      public: data.public
     };
 
     toast.promise(
@@ -159,6 +161,26 @@ export const NewEventForm = ({ placeId = undefined }) => {
                   {...field}
                 />
               </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="public"
+          render={({ field }) => (
+            <FormItem className="flex flex-row align-middle items-center gap-2">
+              <FormControl>
+                <Input
+                  id="public"
+                  type="checkbox"
+                  disabled={isSubmitting}
+                  className="h-4 w-4"
+                  {...field}
+                />
+              </FormControl>
+              <FormLabel className="align-middle">Public</FormLabel>
               <FormMessage />
             </FormItem>
           )}

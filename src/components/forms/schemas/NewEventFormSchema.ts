@@ -9,6 +9,7 @@ export const NewEventFormSchema = z.object({
   end_at: z.string().optional(),
   description: z.string({}).optional(),
   tags: z.array(z.string()).optional(),
+  public: z.boolean()
 });
 
 export type NewEventFormSchema = z.infer<typeof NewEventFormSchema>;
