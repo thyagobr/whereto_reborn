@@ -9,6 +9,13 @@ export default async function middleware(
   const token = await getToken({ req });
   const isAuthenticated = !!token;
 
+  const { pathname } = req.nextUrl;
+
+  // Allow unauthenticated access to /signup
+  if (pathname.startsWith("/signup")) {
+    return NextResponse.next();
+  }
+
   if (req.nextUrl.pathname.startsWith("/login") && isAuthenticated) {
     return NextResponse.redirect(new URL("/", req.url));
   }

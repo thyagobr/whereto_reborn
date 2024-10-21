@@ -15,6 +15,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { signIn } from "next-auth/react";
 import { toast } from "sonner";
+import Link from "next/link";
 
 // Define schema for form validation using Zod
 const loginSchema = z.object({
@@ -60,7 +61,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="flex items-center justify-center h-screen">
+    <div className="flex flex-col items-center justify-center h-screen m-auto max-w-[450px]">
       <Form {...form}>
         <form
           id="event-form"
@@ -124,6 +125,9 @@ export default function LoginPage() {
           </Button>
         </form>
       </Form>
+      <Link href="/signup" className="mt-5 w-full">
+        <Button className="bg-sky-500 hover:bg-teal-500 w-full">Create an account</Button>
+      </Link>
     </div>
   )
 }
