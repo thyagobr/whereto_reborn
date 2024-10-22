@@ -7,6 +7,7 @@ import { PlaceTag } from "@/components/place_tag";
 import { Chat } from "@/components/chat";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { useSession } from "next-auth/react";
 
 export default function ShowEvent({ params }) {
   const { id } = params;
@@ -14,6 +15,7 @@ export default function ShowEvent({ params }) {
   const [chat, setChat] = useState(null);
 
   const { events, error, isLoading } = useGetEvent(id);
+  const session = useSession();
 
   useEffect(() => {
     if (!events) return;
@@ -52,9 +54,11 @@ export default function ShowEvent({ params }) {
           </div>
         </div>
         <div>
+          {session?.data?.user?.data?.role === "admin" && (
           <Link href={`/events/${event.id}/edit`}>
             <Button>Edit</Button>
           </Link>
+          )}
         </div>
       </Card>
       <Chat chatableId={event.id} chatableType='Event' />
