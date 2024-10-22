@@ -35,7 +35,7 @@ const PagesShow: NextPage = ({ params: { id } }: any) => {
   const place = places[0];
 
   return (
-    <>
+    <div className="flex flex-col gap-3 mt-5">
       <Card className="w-full max-w-[450px] mx-auto p-5">
         <div
           className={`flex flex-col items-center px-5 py-10 gap-3 ${RobotoFont.className}`}
@@ -64,7 +64,7 @@ const PagesShow: NextPage = ({ params: { id } }: any) => {
 
         <PlaceEventsList place={place} />
       </div>
-    </>
+    </div>
   );
 };
 
