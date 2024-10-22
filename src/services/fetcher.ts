@@ -6,6 +6,7 @@ const fetcher = async ({ url, params }, data?) => {
   const headers = {
     // Authorization: `Bearer ${token}`,
     // "ngrok-skip-browser-warning": "1337420"
+    "Content-Type": "application/json"
   } as any;
 
   // const containsFile = data?.arg ? Object.values(data?.arg).some(value => value instanceof File) : false;

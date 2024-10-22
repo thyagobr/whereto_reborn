@@ -5,6 +5,8 @@ import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { PlaceTag } from "@/components/place_tag";
 import { Chat } from "@/components/chat";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 export default function ShowEvent({ params }) {
   const { id } = params;
@@ -48,6 +50,11 @@ export default function ShowEvent({ params }) {
               <PlaceTag tag={tag} key={tag.id} />
             ))}
           </div>
+        </div>
+        <div>
+          <Link href={`/events/${event.id}/edit`}>
+            <Button>Edit</Button>
+          </Link>
         </div>
       </Card>
       <Chat chatableId={event.id} chatableType='Event' />

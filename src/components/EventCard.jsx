@@ -37,7 +37,7 @@ export function EventCard({ event }) {
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <div>{event.date}</div>
+        <div>{event.start_at}</div>
         <div className="text-xl">{event.place.name}</div>
         <a
           href={`https://www.google.com/maps/search/${event.place.name}+${event.place.address}`}
