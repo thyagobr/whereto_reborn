@@ -26,6 +26,12 @@ export const Chat = ({ chatableId, chatableType }) => {
     mutate();
   }
 
+  const saveOnEnter = async (e) => {
+    if (e.key === "Enter") {
+      await saveMessage();
+    }
+  }
+
   return (
     <div className="w-full max-w-[450px] mx-auto mt-5">
       <div className="w-full text-center">
@@ -34,17 +40,18 @@ export const Chat = ({ chatableId, chatableType }) => {
       <hr className="border-white-800 my-5" />
       {((user?.role === "standard_user") || (user?.role === "admin")) && (
         <div className="w-full max-w-[450px] mx-auto my-5">
-        <input
-          type="text"
-          className="w-full border-2 border-white-800 rounded-md p-2"
-          onChange={(e) => setMessage(e.target.value)}
-          value={message}
-          placeholder="Type a message..." />
-        <Button
-          className="w-full rounded"
-          onClick={async () => await saveMessage()}
-        >Send</Button>
-      </div>)}
+          <input
+            type="text"
+            className="w-full border-2 border-white-800 rounded-md p-2"
+            onChange={(e) => setMessage(e.target.value)}
+            value={message}
+            onKeyPress={saveOnEnter}
+            placeholder="Type a message..." />
+          <Button
+            className="w-full rounded my-3"
+            onClick={async () => await saveMessage()}
+          >Send</Button>
+        </div>)}
       {!chat || chat.messages.length === 0 && (
         <div className="w-full text-center">
           <p>No messages yet</p>
