@@ -7,7 +7,7 @@ import { PlaceTag } from "@/components/place_tag";
 import { Chat } from "@/components/chat";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { useSession } from "next-auth/react";
+import { useUser } from "@/hooks/users/useUser";
 
 export default function ShowEvent({ params }) {
   const { id } = params;
@@ -15,7 +15,7 @@ export default function ShowEvent({ params }) {
   const [chat, setChat] = useState(null);
 
   const { events, error, isLoading } = useGetEvent(id);
-  const session = useSession();
+  const { user } = useUser();
 
   useEffect(() => {
     if (!events) return;
@@ -54,10 +54,12 @@ export default function ShowEvent({ params }) {
           </div>
         </div>
         <div>
-          {session?.data?.user?.data?.role === "admin" && (
-          <Link href={`/events/${event.id}/edit`}>
-            <Button>Edit</Button>
-          </Link>
+          {user?.role === "admin" && (
+            <div className="flex justify-center">
+              <Link href={`/events/${event.id}/edit`}>
+                <Button className="bg-rose-500 hover:bg-rose-900">Edit</Button>
+              </Link>
+          </div>
           )}
         </div>
       </Card>
