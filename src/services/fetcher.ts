@@ -2,11 +2,12 @@ const fetcher = async ({ url, params }, data?) => {
   const fullUrl = `${process.env.NEXT_PUBLIC_API_URL}${url}`;
   // const token = localStorage.getItem("token");
 
-  let body;
+  // let body;
   const headers = {
     // Authorization: `Bearer ${token}`,
     // "ngrok-skip-browser-warning": "1337420"
     "Content-Type": "application/json"
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } as any;
 
   // const containsFile = data?.arg ? Object.values(data?.arg).some(value => value instanceof File) : false;
@@ -16,7 +17,7 @@ const fetcher = async ({ url, params }, data?) => {
   //     formData.append(key, data.arg[key]);
   //   });
   //   body = formData;
-  body = data ? JSON.stringify(data?.arg) : null;
+  const body = data ? JSON.stringify(data?.arg) : null;
   headers["Content-Type"] = "application/json";
 
   if (fullUrl.includes("undefined")) return null;

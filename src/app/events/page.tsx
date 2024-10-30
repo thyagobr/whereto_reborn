@@ -1,16 +1,14 @@
 "use client";
+import { FeedTabs } from "@/components/Feed/FeedTabs/FeedTabs";
 import { EventsList } from "@/components/lists/EventsList";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
-import { useState } from "react";
-import { useTranslations } from "next-intl";
-import { FeedTabs } from "@/components/Feed/FeedTabs/FeedTabs";
-import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function Events() {
   const [searchText, setSearchText] = useState("");
-  const t = useTranslations("events");
   const router = useRouter();
 
   return (

@@ -1,19 +1,17 @@
-"use client"
-import { NextPage } from "next";
-import { Roboto } from "next/font/google";
-import { PlaceTag } from "@/components/place_tag";
-const RobotoFont = Roboto({ weight: "300", subsets: ["latin"] });
-import Link from "next/link";
-import { useEffect, useState } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+"use client";
 import { PlaceEventsList } from "@/components/lists/PlaceEventsList/PlaceEventsList";
-import { Separator } from "@/components/ui/separator";
+import { PlaceTag } from "@/components/place_tag";
 import { Card } from "@/components/ui/card";
 import { useGetPlaces } from "@/hooks/places/useGetPlaces";
+import { NextPage } from "next";
+import { Roboto } from "next/font/google";
+const RobotoFont = Roboto({ weight: "300", subsets: ["latin"] });
 
 export type PlaceAttributes = {
   name: string;
   address: string;
-  Tags: PlaceTag[];
+  Tags: typeof PlaceTag[];
   events: Event[];
 };
 
@@ -25,11 +23,11 @@ const PagesShow: NextPage = ({ params: { id } }: any) => {
   const { places, isLoading } = useGetPlaces({ id });
 
   if (!places || places.length === 0) {
-    return <h2>Place not found</h2>
+    return <h2>Place not found</h2>;
   }
 
   if (isLoading) {
-    return <h2>Loading...</h2>
+    return <h2>Loading...</h2>;
   }
 
   const place = places[0];

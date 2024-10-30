@@ -16,7 +16,6 @@ import {
 import { Input } from "../ui/input";
 import { EditEventFormSchema } from "./schemas/EditEventFormSchema";
 import { useEditEvent } from "@/hooks/events/useEditEvent";
-import { useGetEvent } from "@/hooks/events/useGetEvent";
 import { useEffect } from "react";
 
 export const EditEventForm = ({ event }) => {

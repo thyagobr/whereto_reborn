@@ -38,7 +38,7 @@ export default function NewEvent() {
         setSelectedPlace(queryPlace);
       }
     }
-  }, [places]);
+  }, [places, placeId]);
 
   if (isLoading) {
     return <PageLoadSpinner />;

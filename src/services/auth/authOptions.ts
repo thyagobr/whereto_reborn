@@ -17,7 +17,7 @@ export const authOptions: AuthOptions = {
         email: {},
         password: {},
       },
-      async authorize(credentials, req) {
+      async authorize(credentials) {
         try {
           const res = await fetch(`${apiUrl}/auth/login`, {
             method: "POST",
@@ -45,6 +45,7 @@ export const authOptions: AuthOptions = {
       return { ...token, ...user };
     },
     async session({ session, token }) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       session.user = token as any;
       return session;
     }

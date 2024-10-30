@@ -4,13 +4,11 @@ import { PlacesList } from "@/components/lists/PlacesList/PlacesList";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
-import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function Home() {
   const [searchText, setSearchText] = useState("");
-  const t = useTranslations("home");
   const router = useRouter();
 
   return (

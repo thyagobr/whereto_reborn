@@ -1,4 +1,4 @@
-export const ChatBubble = ({ user, message, time }) => {
+export const ChatBubble = ({ user, message }) => {
   const me = message.user_id === user?.id;
 
   return (

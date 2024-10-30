@@ -1,7 +1,3 @@
-import { ReactNode } from "react";
-
-function App(children: ReactNode) {
-
-}
+function App() {}
 
 export default App;
