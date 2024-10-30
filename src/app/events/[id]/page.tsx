@@ -4,7 +4,7 @@ import { useGetEvent } from "@/hooks/events/useGetEvent";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { PlaceTag } from "@/components/place_tag";
-import { Chat } from "@/components/chat";
+import { Chat } from "@/components/Chat";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { useUser } from "@/hooks/users/useUser";
