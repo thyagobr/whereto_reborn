@@ -9,7 +9,7 @@ import { useUser } from "@/hooks/users/useUser";
 
 export const Chat = ({ chatableId, chatableType }) => {
 
-  const { chat, error, isLoading, mutate } = useGetChat({ chatableId, chatableType });
+  const { chat, mutate } = useGetChat({ chatableId, chatableType });
   const { trigger: chatMessageTrigger } = useCreateChatMessage({ chatableId, chatableType });
   const { user } = useUser();
 

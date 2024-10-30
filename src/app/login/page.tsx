@@ -9,7 +9,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage
+  FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -20,13 +20,14 @@ import Link from "next/link";
 // Define schema for form validation using Zod
 const loginSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
-  password: z.string().min(6, { message: "Password must be at least 6 characters long" }),
+  password: z
+    .string()
+    .min(6, { message: "Password must be at least 6 characters long" }),
 });
 
 type LoginFormValues = z.infer<typeof loginSchema>;
 
 export default function LoginPage() {
-
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -36,7 +37,6 @@ export default function LoginPage() {
   });
 
   const {
-    register,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = form;
@@ -47,7 +47,7 @@ export default function LoginPage() {
         email: data.email,
         password: data.password,
         callbackUrl: "/",
-        redirect: false
+        redirect: false,
       }),
       {
         loading: "Logging in...",
@@ -55,10 +55,10 @@ export default function LoginPage() {
           window.location.replace("/");
           return "Logged in";
         },
-        error: "Failed to log in"
+        error: "Failed to log in",
       }
     );
-  }
+  };
 
   return (
     <div className="flex flex-col items-center justify-center h-screen m-auto max-w-[450px]">
@@ -75,7 +75,10 @@ export default function LoginPage() {
               return (
                 <FormItem className="flex flex-col gap-2">
                   <FormLabel
-                    className={`text-center ${errors.email ? "text-red-500" : ""}`}>
+                    className={`text-center ${
+                      errors.email ? "text-red-500" : ""
+                    }`}
+                  >
                     Email
                   </FormLabel>
                   <FormControl>
@@ -92,7 +95,8 @@ export default function LoginPage() {
                   </FormControl>
                   <FormMessage />
                 </FormItem>
-              )}}
+              );
+            }}
           />
           <FormField
             control={form.control}
@@ -101,7 +105,10 @@ export default function LoginPage() {
               return (
                 <FormItem className="flex flex-col gap-2">
                   <FormLabel
-                    className={`text-center ${errors.email ? "text-red-500" : ""}`}>
+                    className={`text-center ${
+                      errors.email ? "text-red-500" : ""
+                    }`}
+                  >
                     Password
                   </FormLabel>
                   <FormControl>
@@ -118,7 +125,8 @@ export default function LoginPage() {
                   </FormControl>
                   <FormMessage />
                 </FormItem>
-              )}}
+              );
+            }}
           />
           <Button type="submit" disabled={isSubmitting} className="w-full">
             Login
@@ -126,8 +134,10 @@ export default function LoginPage() {
         </form>
       </Form>
       <Link href="/signup" className="mt-5 w-full">
-        <Button className="bg-sky-500 hover:bg-teal-500 w-full">Create an account</Button>
+        <Button className="bg-sky-500 hover:bg-teal-500 w-full">
+          Create an account
+        </Button>
       </Link>
     </div>
-  )
+  );
 }

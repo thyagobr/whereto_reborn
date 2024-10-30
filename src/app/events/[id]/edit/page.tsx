@@ -1,19 +1,13 @@
-"use client"
-import { Card } from "@/components/ui/card";
-import { useGetEvent } from "@/hooks/events/useGetEvent";
-import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
-import { PlaceTag } from "@/components/place_tag";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
+"use client";
 import { EditEventForm } from "@/components/forms/EditEventForm";
+import { useGetEvent } from "@/hooks/events/useGetEvent";
+import { useEffect, useState } from "react";
 
 export default function EditEvent({ params }) {
   const { id } = params;
   const [event, setEvent] = useState(null);
-  const [chat, setChat] = useState(null);
 
-  const { events, error, isLoading } = useGetEvent(id);
+  const { events } = useGetEvent(id);
 
   useEffect(() => {
     if (!events) return;
@@ -34,4 +28,3 @@ export default function EditEvent({ params }) {
     </div>
   );
 }
-

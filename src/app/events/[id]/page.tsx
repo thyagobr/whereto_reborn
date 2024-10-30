@@ -1,20 +1,18 @@
-"use client"
+"use client";
+import { Chat } from "@/components/Chat";
+import { PlaceTag } from "@/components/place_tag";
+import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useGetEvent } from "@/hooks/events/useGetEvent";
-import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
-import { PlaceTag } from "@/components/place_tag";
-import { Chat } from "@/components/Chat";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import { useUser } from "@/hooks/users/useUser";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function ShowEvent({ params }) {
   const { id } = params;
   const [event, setEvent] = useState(null);
-  const [chat, setChat] = useState(null);
 
-  const { events, error, isLoading } = useGetEvent(id);
+  const { events } = useGetEvent(id);
   const { user } = useUser();
 
   useEffect(() => {
@@ -59,11 +57,11 @@ export default function ShowEvent({ params }) {
               <Link href={`/events/${event.id}/edit`}>
                 <Button className="bg-rose-500 hover:bg-rose-900">Edit</Button>
               </Link>
-          </div>
+            </div>
           )}
         </div>
       </Card>
-      <Chat chatableId={event.id} chatableType='Event' />
+      <Chat chatableId={event.id} chatableType="Event" />
     </div>
   );
 }

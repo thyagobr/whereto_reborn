@@ -1,12 +1,10 @@
 import { getToken } from "next-auth/jwt";
-import { withAuth } from "next-auth/middleware";
-import { NextFetchEvent, NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 const blockedPaths = ["/signup", "/login"];
 
 export default async function middleware(
-  req: NextRequest,
-  event: NextFetchEvent
+  req: NextRequest
 ) {
   //return NextResponse.next();
   const token = await getToken({ req });
