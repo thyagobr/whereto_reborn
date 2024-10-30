@@ -5,7 +5,7 @@ const fetcher = async ({ url, params }, data?) => {
   // let body;
   const headers = {
     // Authorization: `Bearer ${token}`,
-    "ngrok-skip-browser-warning": "1337420"
+    "ngrok-skip-browser-warning": "1337420",
     "Content-Type": "application/json"
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } as any;
