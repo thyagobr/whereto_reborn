@@ -1,14 +1,17 @@
 const fetcher = async ({ url, params }, data?) => {
   const fullUrl = `${process.env.NEXT_PUBLIC_API_URL}${url}`;
-  // const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token");
 
   // let body;
   const headers = {
-    // Authorization: `Bearer ${token}`,
     "ngrok-skip-browser-warning": "1337420",
     "Content-Type": "application/json"
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } as any;
+
+  if (token) {
+    headers["Authorization"] = `Bearer ${token}`;
+  }
 
   // const containsFile = data?.arg ? Object.values(data?.arg).some(value => value instanceof File) : false;
   // if (data?.arg && containsFile) {

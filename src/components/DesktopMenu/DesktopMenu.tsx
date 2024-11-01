@@ -10,6 +10,11 @@ import {
 import { signOut } from "next-auth/react";
 
 export const DesktopMenu = () => {
+  const logout = () => {
+    window.localStorage.removeItem("token");
+    signOut();
+  }
+
   return (
     <div className="md:flex justify-end hidden w-full h-full border-slate-800 border-r-[1px]">
       <div className="flex flex-col gap-1 lg:items-start items-end w-full max-w-[220px] pt-6 mx-3">
@@ -20,7 +25,7 @@ export const DesktopMenu = () => {
             </button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuItem className="flex items-center justify-between" onClick={() => signOut()}>
+            <DropdownMenuItem className="flex items-center justify-between" onClick={() => logout()}>
               Log out <LogOut size={20} />
             </DropdownMenuItem>
           </DropdownMenuContent>
