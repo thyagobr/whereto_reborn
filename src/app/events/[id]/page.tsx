@@ -7,6 +7,7 @@ import { useGetEvent } from "@/hooks/events/useGetEvent";
 import { useUser } from "@/hooks/users/useUser";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { FeedTabs } from "@/components/Feed/FeedTabs/FeedTabs";
 
 export default function ShowEvent({ params }) {
   const { id } = params;
@@ -30,6 +31,7 @@ export default function ShowEvent({ params }) {
 
   return (
     <div className="flex flex-col">
+      <FeedTabs />
       <Card className="w-full max-w-[450px] mx-auto p-5">
         <div className="flex flex-col items-center px-5 py-10 gap-3">
           <h2 className="text-center w-full text-2xl neon_cyan_text">

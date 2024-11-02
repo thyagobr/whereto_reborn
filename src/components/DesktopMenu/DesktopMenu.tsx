@@ -36,20 +36,6 @@ export const DesktopMenu = () => {
           className="flex lg:justify-start justify-end gap-3 font-bold text-lg lg:w-full w-fit px-3 py-6"
           variant="ghost"
         >
-          <Home size={30} />
-          <span className="lg:flex hidden">Home</span>
-        </Button>
-        <Button
-          className="flex lg:justify-start justify-end gap-3 font-bold text-lg lg:w-full w-fit px-3 py-6"
-          variant="ghost"
-        >
-          <Search size={30} />
-          <span className="lg:flex hidden">Search</span>
-        </Button>
-        <Button
-          className="flex lg:justify-start justify-end gap-3 font-bold text-lg lg:w-full w-fit px-3 py-6"
-          variant="ghost"
-        >
           <MapPin size={30} />
           <span className="lg:flex hidden">Places</span>
         </Button>

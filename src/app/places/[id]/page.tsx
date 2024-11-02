@@ -5,8 +5,7 @@ import { PlaceTag } from "@/components/place_tag";
 import { Card } from "@/components/ui/card";
 import { useGetPlaces } from "@/hooks/places/useGetPlaces";
 import { NextPage } from "next";
-import { Roboto } from "next/font/google";
-const RobotoFont = Roboto({ weight: "300", subsets: ["latin"] });
+import { FeedTabs } from "@/components/Feed/FeedTabs/FeedTabs";
 
 export type PlaceAttributes = {
   name: string;
@@ -34,9 +33,11 @@ const PagesShow: NextPage = ({ params: { id } }: any) => {
 
   return (
     <div className="flex flex-col gap-3 mt-5">
+      <FeedTabs />
+
       <Card className="w-full max-w-[450px] mx-auto p-5">
         <div
-          className={`flex flex-col items-center px-5 py-10 gap-3 ${RobotoFont.className}`}
+          className={`flex flex-col items-center px-5 py-10 gap-3`}
         >
           <h2 className="text-center w-full text-2xl neon_cyan_text">
             {place.name}
