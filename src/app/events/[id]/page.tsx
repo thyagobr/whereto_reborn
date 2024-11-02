@@ -3,6 +3,7 @@ import { Chat } from "@/components/Chat";
 import { PlaceTag } from "@/components/place_tag";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { Photos } from "@/components/Photos";
 import { useGetEvent } from "@/hooks/events/useGetEvent";
 import { useUser } from "@/hooks/users/useUser";
 import Link from "next/link";
@@ -16,6 +17,8 @@ export default function ShowEvent({ params }) {
 
   const { events, isLoading } = useGetEvent(id);
   const { user } = useUser();
+
+  const [tab, setTab] = useState("chat");
 
   useEffect(() => {
     if (!events) return;
@@ -73,7 +76,22 @@ export default function ShowEvent({ params }) {
           )}
         </div>
       </Card>
-      <Chat chatableId={event.id} chatableType="Event" />
+      <div className="mt-10">
+        <div className="w-full flex justify-around max-w-[450px] m-auto">
+          <button
+            onClick={() => setTab("chat")}
+            className="bg-slate-800 py-1 px-3 rounded">
+            Chat
+          </button>
+          <button
+            onClick={() => setTab("photos")}
+            className="bg-slate-800 py-1 px-3 rounded">
+            Photos
+          </button>
+        </div>
+        {tab === "chat" && <Chat chatableId={event.id} chatableType="Event" />}
+        {tab === "photos" && <Photos photoable={event} photoableType="event" />}
+      </div>
     </div>
   );
 }

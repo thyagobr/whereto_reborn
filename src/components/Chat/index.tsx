@@ -34,9 +34,6 @@ export const Chat = ({ chatableId, chatableType }) => {
 
   return (
     <div className="w-full max-w-[450px] mx-auto mt-5">
-      <div className="w-full text-center">
-        <h1>Chat</h1>
-      </div>
       <hr className="border-white-800 my-5" />
       {((user?.role === "standard_user") || (user?.role === "admin")) && (
         <div className="w-full max-w-[450px] mx-auto my-5">
