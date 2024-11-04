@@ -1,5 +1,4 @@
 "use client";
-import { FeedTabs } from "@/components/Feed/FeedTabs/FeedTabs";
 import { EventsList } from "@/components/lists/EventsList";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,8 +12,7 @@ export default function Events() {
 
   return (
     <div className="mb-4">
-      <FeedTabs />
-      <div className="flex items-center mx-auto max-w-[600px] px-3 sm:px-0 mt-3">
+      <div className="flex items-center mx-auto max-w-[600px] px-3 mt-3">
         <div className="relative z-0 w-full">
           <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
           <Input
@@ -33,7 +31,7 @@ export default function Events() {
         </Button>
       </div>
       {/* Feed */}
-      <div className="md:border-slate-800 md:border-x-[1px] border-b-[1px] w-full max-w-[600px] mx-auto mt-3">
+      <div className="w-full max-w-[600px] mx-auto mt-3">
         <EventsList searchText={searchText} />
       </div>
     </div>

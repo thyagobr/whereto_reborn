@@ -15,7 +15,8 @@ export function EventCard({ event }) {
 
   const { trigger } = useToggleInterest(event.id);
 
-  const toggleInterest = () => {
+  const toggleInterest = (event) => {
+    event.stopPropagation();
     trigger();
     event.interested = !interested;
     setInterested(!interested);
@@ -23,17 +24,13 @@ export function EventCard({ event }) {
 
   return (
     <Card
+      onClick={() => event_clicked(event)}
       key={event.id}
-      className="w-full max-w-[600px] cursor-pointer border-slate-800  border-0 border-t-[1px] border-r-0 rounded-none"
+      className="last:border-b-[1px] w-full max-w-[600px] cursor-pointer border-slate-800  border-0 border-t-[1px] border-r-0 rounded-none"
     >
       <CardHeader>
         <CardTitle>
-          <h2
-            className="text-2xl line-clamp-1"
-            onClick={() => event_clicked(event)}
-          >
-            {event.name}
-          </h2>
+          <h2 className="text-2xl line-clamp-1">{event.name}</h2>
         </CardTitle>
       </CardHeader>
       <CardContent>

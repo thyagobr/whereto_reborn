@@ -8,12 +8,13 @@ import { useUser } from "@/hooks/users/useUser";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FeedTabs } from "@/components/Feed/FeedTabs/FeedTabs";
+import { LoadSpinner } from "@/components/LoadSpinner/LoadSpinner";
 
 export default function ShowEvent({ params }) {
   const { id } = params;
   const [event, setEvent] = useState(null);
 
-  const { events } = useGetEvent(id);
+  const { events, isLoading } = useGetEvent(id);
   const { user } = useUser();
 
   useEffect(() => {
@@ -21,17 +22,26 @@ export default function ShowEvent({ params }) {
     setEvent(events[0]);
   }, [events]);
 
-  if (!events) {
-    return <h1 className="text-white">Loading...</h1>;
+  if (isLoading) {
+    return <LoadSpinner />;
   }
 
   if (!event) {
-    return <h1 className="text-white">Event not found</h1>;
+    return (
+      <div className="flex flex-col items-center justify-center mt-20">
+        <h1 className="text-3xl font-bold text-white mb-4">Event Not Found</h1>
+        <p className="text-lg text-gray-400 mb-6">
+          Sorry, we couldn't find the event you're looking for.
+        </p>
+        <Link href="/events">
+          <Button>Back to Events</Button>
+        </Link>
+      </div>
+    );
   }
 
   return (
     <div className="flex flex-col">
-      <FeedTabs />
       <Card className="w-full max-w-[450px] mx-auto p-5">
         <div className="flex flex-col items-center px-5 py-10 gap-3">
           <h2 className="text-center w-full text-2xl neon_cyan_text">

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { FeedTabs } from "../Feed/FeedTabs/FeedTabs";
 
 export function UnprotectedLayout({ children }) {
   return (
@@ -9,6 +10,7 @@ export function UnprotectedLayout({ children }) {
         <Link href="/">whereto</Link>
         <Link href="/login">login</Link>
       </div>
+      <FeedTabs />
       <div className="grid grid-flow-col">{children}</div>
     </div>
   );
