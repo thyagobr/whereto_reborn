@@ -2,6 +2,7 @@ import { useDeletePhoto } from '@/hooks/photos/useDeletePhoto';
 import { useEditPhoto } from '@/hooks/photos/useEditPhoto';
 import { useUser } from '@/hooks/users/useUser';
 import { useState } from 'react';
+import { InlineImage } from '@/components/InlineImage';
 
 export function Photo({ photo, photoable, photoableType }) {
   const { user } = useUser();
@@ -37,12 +38,7 @@ export function Photo({ photo, photoable, photoableType }) {
     <div
       key={photo.id}
       className={`flex flex-col justify-center gap-2 ${ownPhoto ? 'border-primary' : 'border-slate-400'} rounded border-2 p-2`}>
-      <img
-        key={photo.id}
-        src={photo.url}
-        alt={photo.id}
-        className="w-full h-auto mx-auto"
-      />
+      <InlineImage imageUrl={photo.url} />
       <div className="flex justify-between">
         <p>{photo.user.name}</p>
         <p>{photo.created_at}</p>
