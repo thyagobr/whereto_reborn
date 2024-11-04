@@ -31,7 +31,7 @@ export function Photo({ photo, photoable, photoableType }) {
     }
   }
 
-  const ownPhoto = photo.user.id === user.id;
+  const ownPhoto = user && photo.user.id === user.id;
 
   return (
     <div
