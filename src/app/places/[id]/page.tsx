@@ -6,11 +6,14 @@ import { Card } from "@/components/ui/card";
 import { useGetPlaces } from "@/hooks/places/useGetPlaces";
 import { NextPage } from "next";
 import { FeedTabs } from "@/components/Feed/FeedTabs/FeedTabs";
+import { LoadSpinner } from "@/components/LoadSpinner/LoadSpinner";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 export type PlaceAttributes = {
   name: string;
   address: string;
-  Tags: typeof PlaceTag[];
+  Tags: (typeof PlaceTag)[];
   events: Event[];
 };
 
@@ -21,24 +24,30 @@ export type TagAttributes = {
 const PagesShow: NextPage = ({ params: { id } }: any) => {
   const { places, isLoading } = useGetPlaces({ id });
 
-  if (!places || places.length === 0) {
-    return <h2>Place not found</h2>;
+  if (isLoading) {
+    return <LoadSpinner />;
   }
 
-  if (isLoading) {
-    return <h2>Loading...</h2>;
+  if (!places || places.length === 0) {
+    return (
+      <div className="flex flex-col items-center justify-center mt-20">
+        <h1 className="text-3xl font-bold text-white mb-4">Place Not Found</h1>
+        <p className="text-lg text-gray-400 mb-6">
+          Sorry, we couldn't find the place you're looking for.
+        </p>
+        <Link href="/">
+          <Button>Back to Places</Button>
+        </Link>
+      </div>
+    );
   }
 
   const place = places[0];
 
   return (
     <div className="flex flex-col gap-3 mt-5">
-      <FeedTabs />
-
       <Card className="w-full max-w-[450px] mx-auto p-5">
-        <div
-          className={`flex flex-col items-center px-5 py-10 gap-3`}
-        >
+        <div className={`flex flex-col items-center px-5 py-10 gap-3`}>
           <h2 className="text-center w-full text-2xl neon_cyan_text">
             {place.name}
           </h2>
@@ -50,7 +59,7 @@ const PagesShow: NextPage = ({ params: { id } }: any) => {
           >
             (maps)
           </a>
-          <div className="flex mt-5 items-center justify-evenly gap-2">
+          <div className="flex flex-wrap mt-5 items-center gap-2">
             {place.tags.map((tag) => (
               <PlaceTag tag={tag} key={tag.id} />
             ))}
