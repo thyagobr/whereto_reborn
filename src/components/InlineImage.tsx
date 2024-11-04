@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 
 export function InlineImage({ imageUrl }) {
   const [base64Image, setBase64Image] = useState(null);
-  console.log(imageUrl);
 
   useEffect(() => {
     // Function to fetch image and convert to Base64

@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useStorePhoto } from '@/hooks/photos/useStorePhoto';
 import { Photo } from './Photo';
 import { useUser } from '@/hooks/users/useUser';
+import { toast } from 'sonner';
 
 export function Photos({ photoable, photoableType }) {
   const [photo, setPhoto] = useState(null);
@@ -10,6 +11,7 @@ export function Photos({ photoable, photoableType }) {
   const photoableId = photoable.id;
 
   const { trigger, isLoading } = useStorePhoto({ photoableId, photoableType });
+  const inputFileRef = useRef(null);
 
   const userData = useUser();
 
@@ -22,19 +24,16 @@ export function Photos({ photoable, photoableType }) {
       setMessage('Please select a photo');
       return;
     }
-    const response = await trigger(
-      {
-        photo,
-        public: publicPhoto
-      }
-    );
 
-    if (response.ok) {
-      setMessage('Photo uploaded successfully');
-      setPhoto(null);
-    } else if (response.error) {
-      setMessage('Failed to upload photo');
-    }
+    toast.promise(trigger({ photo, public: publicPhoto }), {
+      loading: 'Uploading photo...',
+      success: () => {
+        setPhoto(null);
+        inputFileRef.current.value = '';
+        return 'Photo uploaded successfully';
+      },
+      error: 'Failed to upload photo',
+    });
   };
 
   return (
@@ -42,6 +41,7 @@ export function Photos({ photoable, photoableType }) {
       {userData?.status === "authenticated" && (
         <div className="flex flex-col gap-2 mt-5 px-3">
           <input
+            ref={inputFileRef}
             className="border-2 border-white-800 rounded-md p-2"
             type="file" onChange={handleFileChange} />
           <div className="flex flex-row align-middle gap-2">
