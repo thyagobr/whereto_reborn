@@ -4,7 +4,7 @@ import { useUser } from '@/hooks/users/useUser';
 import { useState } from 'react';
 import { InlineImage } from '@/components/InlineImage';
 
-export function Photo({ photo, photoable, photoableType }) {
+export function Photo({ photo, photoable, photoableType, reloadPhotos }) {
   const { user } = useUser();
   const [isPublic, setIsPublic] = useState(photo.public);
 
@@ -14,11 +14,7 @@ export function Photo({ photo, photoable, photoableType }) {
   const handleDelete = async () => {
     const response = await deletePhoto(); 
 
-    if (response.ok) {
-      console.log('Photo deleted successfully');
-    } else {
-      console.log('Failed to delete photo');
-    }
+    reloadPhotos();
   }
 
   const setPublicPhoto = async (value) => {

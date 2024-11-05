@@ -1,5 +1,6 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useStorePhoto } from '@/hooks/photos/useStorePhoto';
+import { useFetchPhotos } from '@/hooks/photos/useFetchPhotos';
 import { Photo } from './Photo';
 import { useUser } from '@/hooks/users/useUser';
 import { toast } from 'sonner';
@@ -11,6 +12,7 @@ export function Photos({ photoable, photoableType }) {
   const photoableId = photoable.id;
 
   const { trigger, isLoading } = useStorePhoto({ photoableId, photoableType });
+  const { photos, reloadPhotos } = useFetchPhotos({ photoableId: photoable.id, photoableType });
   const inputFileRef = useRef(null);
 
   const userData = useUser();
@@ -30,11 +32,16 @@ export function Photos({ photoable, photoableType }) {
       success: () => {
         setPhoto(null);
         inputFileRef.current.value = '';
+        reloadPhotos();
         return 'Photo uploaded successfully';
       },
       error: 'Failed to upload photo',
     });
   };
+
+  if (!photos) {
+    return <p>Loading photos...</p>;
+  }
 
   return (
     <div>
@@ -63,12 +70,13 @@ export function Photos({ photoable, photoableType }) {
         </div>
       )}
       <div className="flex flex-col w-full m-auto max-w-[450px] gap-2 mt-5 px-3">
-        {photoable.photos.map((photo) => (
+        {photos.map((photo) => (
           <Photo
             key={photo.id}
             photo={photo}
             photoable={photoable}
             photoableType={photoableType}
+            reloadPhotos={reloadPhotos}
           />
         ))}
       </div>
