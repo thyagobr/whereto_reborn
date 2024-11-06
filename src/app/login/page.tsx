@@ -61,35 +61,33 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen m-auto max-w-[450px]">
+    <div className="flex flex-col items-center justify-center m-auto w-full px-4 mt-8">
       <Form {...form}>
         <form
           id="event-form"
           onSubmit={handleSubmit(onSubmit)}
-          className="flex flex-col gap-4"
+          className="flex flex-col gap-4 w-full"
         >
           <FormField
             control={form.control}
             name="email"
             render={({ field }) => {
               return (
-                <FormItem className="flex flex-col gap-2">
+                <FormItem className="flex flex-col gap-2 w-full">
                   <FormLabel
-                    className={`text-center ${
-                      errors.email ? "text-red-500" : ""
-                    }`}
+                    className={` ${errors.email ? "text-red-500" : ""}`}
                   >
                     Email
                   </FormLabel>
                   <FormControl>
                     <Input
                       id="email"
-                      placeholder="email@example.com"
+                      placeholder="mail@mail.com...."
                       type="text"
                       autoCapitalize="none"
                       autoCorrect="off"
                       disabled={isSubmitting}
-                      className="text-center"
+                      className="placeholder:text-muted"
                       {...field}
                     />
                   </FormControl>
@@ -105,21 +103,19 @@ export default function LoginPage() {
               return (
                 <FormItem className="flex flex-col gap-2">
                   <FormLabel
-                    className={`text-center ${
-                      errors.email ? "text-red-500" : ""
-                    }`}
+                    className={` ${errors.email ? "text-red-500" : ""}`}
                   >
                     Password
                   </FormLabel>
                   <FormControl>
                     <Input
                       id="password"
-                      placeholder="password"
+                      placeholder="*******"
                       type="password"
                       autoCapitalize="none"
                       autoCorrect="off"
                       disabled={isSubmitting}
-                      className="text-center"
+                       className="placeholder:text-muted"
                       {...field}
                     />
                   </FormControl>

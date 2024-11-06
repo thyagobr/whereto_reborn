@@ -78,12 +78,12 @@ export default function SignUp() {
     });
   };
   return (
-    <div className="flex flex-col items-center justify-center h-screen m-auto max-w-[450px]">
+    <div className="flex flex-col items-center justify-center m-auto w-full px-4 mt-8">
       <Form {...form}>
         <form
           id="event-form"
           onSubmit={handleSubmit(onSubmit)}
-          className="flex flex-col gap-4"
+          className="flex flex-col gap-4 w-full"
         >
           <FormField
             control={form.control}
@@ -91,22 +91,18 @@ export default function SignUp() {
             render={({ field }) => {
               return (
                 <FormItem className="flex flex-col gap-2">
-                  <FormLabel
-                    className={`text-center ${
-                      errors.name ? "text-red-500" : ""
-                    }`}
-                  >
+                  <FormLabel className={`${errors.name ? "text-red-500" : ""}`}>
                     Name
                   </FormLabel>
                   <FormControl>
                     <Input
                       id="name"
-                      placeholder="Name"
+                      placeholder="Name..."
                       type="text"
                       autoCapitalize="none"
                       autoCorrect="off"
                       disabled={isSubmitting}
-                      className="text-center"
+                      className="placeholder:text-muted"
                       {...field}
                     />
                   </FormControl>
@@ -122,21 +118,19 @@ export default function SignUp() {
               return (
                 <FormItem className="flex flex-col gap-2">
                   <FormLabel
-                    className={`text-center ${
-                      errors.email ? "text-red-500" : ""
-                    }`}
+                    className={`${errors.email ? "text-red-500" : ""}`}
                   >
                     Email
                   </FormLabel>
                   <FormControl>
                     <Input
                       id="email"
-                      placeholder="email@example.com"
+                      placeholder="mail@mail.com..."
                       type="text"
                       autoCapitalize="none"
                       autoCorrect="off"
                       disabled={isSubmitting}
-                      className="text-center"
+                      className="placeholder:text-muted"
                       {...field}
                     />
                   </FormControl>
@@ -152,21 +146,19 @@ export default function SignUp() {
               return (
                 <FormItem className="flex flex-col gap-2">
                   <FormLabel
-                    className={`text-center ${
-                      errors.email ? "text-red-500" : ""
-                    }`}
+                    className={`${errors.email ? "text-red-500" : ""}`}
                   >
                     Password
                   </FormLabel>
                   <FormControl>
                     <Input
                       id="password"
-                      placeholder="password"
+                      placeholder="*******"
                       type="password"
                       autoCapitalize="none"
                       autoCorrect="off"
                       disabled={isSubmitting}
-                      className="text-center"
+                      className="placeholder:text-muted"
                       {...field}
                     />
                   </FormControl>
@@ -182,7 +174,7 @@ export default function SignUp() {
               return (
                 <FormItem className="flex flex-col gap-2">
                   <FormLabel
-                    className={`text-center ${
+                    className={`${
                       errors.passwordConfirmation ? "text-red-500" : ""
                     }`}
                   >
@@ -191,12 +183,12 @@ export default function SignUp() {
                   <FormControl>
                     <Input
                       id="passwordConfirmation"
-                      placeholder="confirm your password"
+                      placeholder="*******"
                       type="password"
                       autoCapitalize="none"
                       autoCorrect="off"
                       disabled={isSubmitting}
-                      className="text-center"
+                      className="placeholder:text-muted"
                       {...field}
                     />
                   </FormControl>

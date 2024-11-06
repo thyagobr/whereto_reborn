@@ -21,7 +21,7 @@ export const DesktopMenu = () => {
       <div className="flex flex-col gap-1 lg:items-start items-end w-full max-w-[220px] pt-6 mx-3">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <button className="outline-none">
+            <button className="outline-none ml-2">
               <UserBadge />
             </button>
           </DropdownMenuTrigger>
@@ -54,6 +54,9 @@ export const DesktopMenu = () => {
             <span className="lg:flex hidden">Events</span>
           </Button>
         </Link>
+        <span className="text-sm italic text-muted ml-3">
+          Made with 💜<br/>by  the WhereTo team
+        </span>
       </div>
     </div>
   );

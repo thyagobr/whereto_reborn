@@ -87,7 +87,9 @@ export const DrawerMenu = () => {
           </div>
         </div>
         <SheetDescription className="mt-auto text-muted">
-          NightCrawl app - 2024
+          <span className="text-sm italic text-muted">
+            Made with 💜 by the WhereTo team
+          </span>
         </SheetDescription>
       </SheetContent>
     </Sheet>
