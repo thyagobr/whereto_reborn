@@ -60,6 +60,7 @@ export default function ShowEvent({ params }) {
           >
             (maps)
           </a>
+          <p>{event.description}</p>
           <div className="flex mt-5 items-center justify-evenly gap-2">
             {event.place.tags.map((tag) => (
               <PlaceTag tag={tag} key={tag.id} />
