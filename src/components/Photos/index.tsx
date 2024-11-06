@@ -12,7 +12,7 @@ export function Photos({ photoable, photoableType }) {
   const photoableId = photoable.id;
 
   const { trigger, isLoading } = useStorePhoto({ photoableId, photoableType });
-  const { photos, reloadPhotos } = useFetchPhotos({ photoableId: photoable.id, photoableType });
+  const { photos, isLoading: arePhotosLoading, reloadPhotos } = useFetchPhotos({ photoableId: photoable.id, photoableType });
   const inputFileRef = useRef(null);
 
   const userData = useUser();
@@ -40,7 +40,11 @@ export function Photos({ photoable, photoableType }) {
   };
 
   if (!photos) {
-    return <p>Loading photos...</p>;
+    if (arePhotosLoading) {
+      return <p>Loading photos...</p>;
+    } else {
+      return <p>No photos</p>;
+    }
   }
 
   return (
