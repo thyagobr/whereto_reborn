@@ -14,6 +14,13 @@ import {
 import { Input } from "../ui/input";
 import { NewPlaceFormSchema } from "./schemas/NewPlaceFormSchema";
 import { useCreatePlace } from "@/hooks/places/useCreatePlace";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
 export const NewPlaceForm = () => {
   const form = useForm({
@@ -21,6 +28,8 @@ export const NewPlaceForm = () => {
     defaultValues: {
       name: "",
       address: "",
+      city: "",
+      country: "",
       tags: "",
     },
   });
@@ -66,6 +75,52 @@ export const NewPlaceForm = () => {
             </FormItem>
           )}
         />
+
+        <div className="flex justify-between">
+          <FormField
+            control={form.control}
+            name="city"
+            render={({ field }) => (
+              <FormItem className="flex flex-col gap-2">
+                <FormLabel>City</FormLabel>
+                <FormControl>
+                  <Select>
+                    <SelectTrigger className="w-[180px]">
+                      <SelectValue placeholder="Select a city" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="berlin">Berlin</SelectItem>
+                      <SelectItem value="natal">Natal</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="country"
+            render={({ field }) => (
+              <FormItem className="flex flex-col gap-2">
+                <FormLabel>Country</FormLabel>
+                <FormControl>
+                  <Select>
+                    <SelectTrigger className="w-[180px]">
+                      <SelectValue placeholder="Select a country" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="brasil">Brasil</SelectItem>
+                      <SelectItem value="germany">Germany</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
 
         <FormField
           control={form.control}
