@@ -84,7 +84,7 @@ export const NewPlaceForm = () => {
               <FormItem className="flex flex-col gap-2">
                 <FormLabel>City</FormLabel>
                 <FormControl>
-                  <Select>
+                  <Select onValueChange={field.onChange} value={field.value}>
                     <SelectTrigger className="w-[180px]">
                       <SelectValue placeholder="Select a city" />
                     </SelectTrigger>
@@ -106,7 +106,7 @@ export const NewPlaceForm = () => {
               <FormItem className="flex flex-col gap-2">
                 <FormLabel>Country</FormLabel>
                 <FormControl>
-                  <Select>
+                  <Select onValueChange={field.onChange} value={field.value}>
                     <SelectTrigger className="w-[180px]">
                       <SelectValue placeholder="Select a country" />
                     </SelectTrigger>
