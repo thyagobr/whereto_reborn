@@ -1,4 +1,4 @@
-import { LogOut, MapPin, Ticket } from "lucide-react";
+import { LogOut, MapPin, Ticket, Users } from "lucide-react";
 import { signOut } from "next-auth/react";
 import { Button } from "../ui/button";
 import {
@@ -52,6 +52,15 @@ export const DesktopMenu = () => {
           >
             <Ticket size={30} />
             <span className="lg:flex hidden">Events</span>
+          </Button>
+        </Link>
+        <Link href={"/crews"}>
+          <Button
+            className="flex lg:justify-start justify-end gap-3 font-bold text-lg lg:w-full w-fit px-3 py-6"
+            variant="ghost"
+          >
+            <Users size={30} />
+            <span className="lg:flex hidden">Crews</span>
           </Button>
         </Link>
         <span className="text-sm italic text-muted ml-3">

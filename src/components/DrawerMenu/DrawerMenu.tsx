@@ -7,7 +7,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { AlignJustify, Home, LogOut, MapPin, Ticket } from "lucide-react";
+import { AlignJustify, Home, LogOut, MapPin, Ticket, Users } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { UserBadge } from "../UserBadge";
@@ -73,6 +73,16 @@ export const DrawerMenu = () => {
             >
               <Ticket color="#64748b" />
               <p className="font-bold text-lg text-slate-500">Events</p>
+            </Button>
+          </div>
+          <div className="w-full">
+            <Button
+              onClick={() => navigate("/crews")}
+              className="w-full justify-start gap-3 pl-0"
+              variant="ghost"
+            >
+              <Users color="#64748b" />
+              <p className="font-bold text-lg text-slate-500">Crews</p>
             </Button>
           </div>
           <div className="w-full">
