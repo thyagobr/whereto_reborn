@@ -18,12 +18,25 @@ import { EditEventFormSchema } from "./schemas/EditEventFormSchema";
 import { useEditEvent } from "@/hooks/events/useEditEvent";
 import { useEffect } from "react";
 
+// Helper to format a Date instance into the value expected by an <input type="datetime-local"> (YYYY-MM-DDTHH:MM)
+const toDateTimeLocal = (date: Date) => {
+  const pad = (n: number) => n.toString().padStart(2, "0");
+  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
+};
+
 export const EditEventForm = ({ event }) => {
+  // Calculate today's midday (12:00)
+  const middayToday = (() => {
+    const d = new Date();
+    d.setHours(12, 0, 0, 0);
+    return toDateTimeLocal(d);
+  })();
+
   const form = useForm<EditEventFormSchema>({
     resolver: zodResolver(EditEventFormSchema),
     defaultValues: {
       name: "",
-      start_at: "",
+      start_at: middayToday,
       end_at: "",
       description: "",
       public: false
@@ -59,9 +72,12 @@ export const EditEventForm = ({ event }) => {
 
   useEffect(() => {
     if (event) {
+      const formattedStartAt = event.start_at ? toDateTimeLocal(new Date(event.start_at)) : middayToday;
+      const formattedEndAt = event.end_at ? toDateTimeLocal(new Date(event.end_at)) : middayToday;
       reset({
         name: event.name,
-        start_at: event.start_at,
+        start_at: formattedStartAt,
+        end_at: formattedEndAt,
         description: event.description,
         public: !!event.public,
       });

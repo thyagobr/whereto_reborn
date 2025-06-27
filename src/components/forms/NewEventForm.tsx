@@ -17,12 +17,25 @@ import { Input } from "../ui/input";
 import { NewEventFormSchema } from "./schemas/NewEventFormSchema";
 import { useCreateEvent } from "@/hooks/events/useCreateEvent";
 
+// Helper to format a Date instance into the value expected by an <input type="datetime-local"> (YYYY-MM-DDTHH:MM)
+const toDateTimeLocal = (date: Date) => {
+  const pad = (n: number) => n.toString().padStart(2, "0");
+  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
+};
+
 export const NewEventForm = ({ placeId = undefined }) => {
+  // Calculate today's midday (12:00) once when the component mounts
+  const middayToday = (() => {
+    const d = new Date();
+    d.setHours(12, 0, 0, 0);
+    return toDateTimeLocal(d);
+  })();
+
   const form = useForm<NewEventFormSchema>({
     resolver: zodResolver(NewEventFormSchema),
     defaultValues: {
       name: "",
-      start_at: "",
+      start_at: middayToday,
       end_at: "",
       description: "",
       public: false
