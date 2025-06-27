@@ -43,7 +43,7 @@ export const EventsList = ({ searchText }) => {
     return (
       <div className="mt-10 flex flex-col gap-3 items-center">
         <h3>{`No events for ${searchText}.`}</h3>
-        <Link href={`/events/new?name=${searchText}`}>
+        <Link href={`/events/new?name=${encodeURIComponent(searchText)}`}>
           <Button>Want to create one?</Button>
         </Link>
       </div>

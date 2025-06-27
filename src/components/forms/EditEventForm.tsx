@@ -73,7 +73,7 @@ export const EditEventForm = ({ event }) => {
   useEffect(() => {
     if (event) {
       const formattedStartAt = event.start_at ? toDateTimeLocal(new Date(event.start_at)) : middayToday;
-      const formattedEndAt = event.end_at ? toDateTimeLocal(new Date(event.end_at)) : middayToday;
+      const formattedEndAt = event.end_at ? toDateTimeLocal(new Date(event.end_at)) : "";
       reset({
         name: event.name,
         start_at: formattedStartAt,

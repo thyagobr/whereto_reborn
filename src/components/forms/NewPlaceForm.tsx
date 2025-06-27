@@ -22,11 +22,11 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
-export const NewPlaceForm = () => {
+export const NewPlaceForm = ({ defaultName = "" } = {}) => {
   const form = useForm({
     resolver: zodResolver(NewPlaceFormSchema),
     defaultValues: {
-      name: "",
+      name: defaultName,
       address: "",
       city: "",
       country: "",

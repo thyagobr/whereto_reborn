@@ -23,7 +23,7 @@ const toDateTimeLocal = (date: Date) => {
   return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
 };
 
-export const NewEventForm = ({ placeId = undefined }) => {
+export const NewEventForm = ({ placeId = undefined, defaultName = "" } = {}) => {
   // Calculate today's midday (12:00) once when the component mounts
   const middayToday = (() => {
     const d = new Date();
@@ -34,7 +34,7 @@ export const NewEventForm = ({ placeId = undefined }) => {
   const form = useForm<NewEventFormSchema>({
     resolver: zodResolver(NewEventFormSchema),
     defaultValues: {
-      name: "",
+      name: defaultName,
       start_at: middayToday,
       end_at: "",
       description: "",

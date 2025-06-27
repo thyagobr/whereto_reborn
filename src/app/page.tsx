@@ -25,7 +25,7 @@ export default function Home() {
         <Button
           size="sm"
           className="rounded-l-none h-[40px]"
-          onClick={() => router.push("/places/new")}
+          onClick={() => router.push(`/places/new?name=${encodeURIComponent(searchText)}`)}
         >
           Add new
         </Button>

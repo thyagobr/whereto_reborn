@@ -30,6 +30,7 @@ export default function NewEvent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const placeId = searchParams.get("placeId");
+  const defaultName = searchParams.get("name") || "";
 
   useEffect(() => {
     if (places && placeId) {
@@ -99,7 +100,9 @@ export default function NewEvent() {
           </Popover>
         </div>
 
-        {selectedPlace && <NewEventForm placeId={selectedPlace.id} />}
+        {selectedPlace && (
+          <NewEventForm placeId={selectedPlace.id} defaultName={defaultName} />
+        )}
       </div>
     </div>
   );

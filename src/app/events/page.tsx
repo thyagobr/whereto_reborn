@@ -25,7 +25,7 @@ export default function Events() {
         <Button
           size="sm"
           className="rounded-l-none h-[40px]"
-          onClick={() => router.push("/events/new")}
+          onClick={() => router.push(`/events/new?name=${encodeURIComponent(searchText)}`)}
         >
           Add new
         </Button>
