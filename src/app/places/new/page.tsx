@@ -3,8 +3,11 @@ import { Backlink } from "@/components/Backlink/Backlink";
 import { NewPlaceForm } from "@/components/forms/NewPlaceForm";
 import { NextPage } from "next";
 import { useSearchParams } from "next/navigation";
+import { useRequireAuth } from "@/hooks/useRequireAuth";
 
 const PagesNew: NextPage = () => {
+  const isAuth = useRequireAuth();
+  if (!isAuth) return null;
   const searchParams = useSearchParams();
   const defaultName = searchParams.get("name") || "";
   return (

@@ -3,9 +3,11 @@ import { PlaceCard } from "@/components/PlaceCard";
 import { Button } from "@/components/ui/button";
 import { useGetPlaces } from "@/hooks/places/useGetPlaces";
 import Link from "next/link";
+import { useIsAuthenticated } from "@/lib/useIsAuthenticated";
 
 export const PlacesList = ({ searchText }) => {
   const { places, error, isLoading } = useGetPlaces();
+  const isAuth = useIsAuthenticated();
 
   if (error) {
     return <h1 className="text-white">The server is not responding</h1>;
@@ -35,9 +37,11 @@ export const PlacesList = ({ searchText }) => {
     return (
       <div className="mt-6 flex flex-col gap-3 items-center">
         <h3>{`No places called ${searchText}.`}</h3>
-        <Link href={`/places/new?name=${encodeURIComponent(searchText)}`}>
-          <Button>Want to create one?</Button>
-        </Link>
+        {isAuth && (
+          <Link href={`/places/new?name=${encodeURIComponent(searchText)}`}>
+            <Button>Want to create one?</Button>
+          </Link>
+        )}
       </div>
     );
   }

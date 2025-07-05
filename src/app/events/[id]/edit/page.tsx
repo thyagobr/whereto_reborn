@@ -2,8 +2,11 @@
 import { EditEventForm } from "@/components/forms/EditEventForm";
 import { useGetEvent } from "@/hooks/events/useGetEvent";
 import { useEffect, useState } from "react";
+import { useRequireAuth } from "@/hooks/useRequireAuth";
 
 export default function EditEvent({ params }) {
+  const isAuth = useRequireAuth();
+  if (!isAuth) return null;
   const { id } = params;
   const [event, setEvent] = useState(null);
 

@@ -4,10 +4,12 @@ import { Button } from "@/components/ui/button";
 import { useGetEvents } from "@/hooks/events/useGetEvents";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import { useIsAuthenticated } from "@/lib/useIsAuthenticated";
 
 export const EventsList = ({ searchText }) => {
   const { events, error, isLoading } = useGetEvents();
   const searchParams = useSearchParams();
+  const isAuth = useIsAuthenticated();
   const filterInterest =
     searchParams.get("interests")?.toLowerCase() === "true";
 
@@ -43,9 +45,11 @@ export const EventsList = ({ searchText }) => {
     return (
       <div className="mt-10 flex flex-col gap-3 items-center">
         <h3>{`No events for ${searchText}.`}</h3>
-        <Link href={`/events/new?name=${encodeURIComponent(searchText)}`}>
-          <Button>Want to create one?</Button>
-        </Link>
+        {isAuth && (
+          <Link href={`/events/new?name=${encodeURIComponent(searchText)}`}>
+            <Button>Want to create one?</Button>
+          </Link>
+        )}
       </div>
     );
   }

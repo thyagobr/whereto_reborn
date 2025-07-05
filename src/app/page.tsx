@@ -1,6 +1,7 @@
 "use client";
 import { PlacesList } from "@/components/lists/PlacesList/PlacesList";
 import { Button } from "@/components/ui/button";
+import { useIsAuthenticated } from "@/lib/useIsAuthenticated";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -9,6 +10,7 @@ import { useState } from "react";
 export default function Home() {
   const [searchText, setSearchText] = useState("");
   const router = useRouter();
+  const isAuth = useIsAuthenticated();
 
   return (
     <div className="mb-4 min-h-screen">
@@ -22,13 +24,15 @@ export default function Home() {
             className="pl-8 rounded-r-none border-r-0"
           />
         </div>
-        <Button
-          size="sm"
-          className="rounded-l-none h-[40px]"
-          onClick={() => router.push(`/places/new?name=${encodeURIComponent(searchText)}`)}
-        >
-          Add new
-        </Button>
+        {isAuth && (
+          <Button
+            size="sm"
+            className="rounded-l-none h-[40px]"
+            onClick={() => router.push(`/places/new?name=${encodeURIComponent(searchText)}`)}
+          >
+            Add new
+          </Button>
+        )}
       </div>
       {/* Feed */}
       <div className="w-full max-w-[600px] mx-auto mt-3">

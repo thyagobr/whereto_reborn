@@ -2,8 +2,11 @@
 
 import { Backlink } from "@/components/Backlink/Backlink";
 import { NewSquadForm } from "@/components/forms/NewSquadForm";
+import { useRequireAuth } from "@/hooks/useRequireAuth";
 
 export default function NewCrewPage() {
+  const isAuth = useRequireAuth();
+  if (!isAuth) return null;
   return (
     <div className="w-full max-w-[450px] mx-auto mt-4 px-3">
       <Backlink />

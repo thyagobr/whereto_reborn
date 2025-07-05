@@ -20,9 +20,12 @@ import {
 import { useGetPlaces } from "@/hooks/places/useGetPlaces";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useRequireAuth } from "@/hooks/useRequireAuth";
 import { useEffect, useState } from "react";
 
 export default function NewEvent() {
+  const isAuth = useRequireAuth();
+  if (!isAuth) return null;
   const [selectedPlace, setSelectedPlace] = useState(null);
   const { places, isLoading } = useGetPlaces();
   const [open, setOpen] = useState(false);

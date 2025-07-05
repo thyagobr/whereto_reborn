@@ -1,4 +1,4 @@
-import { signOut } from "next-auth/react";
+import { logout } from "@/lib/logout";
 import { createRef } from "react";
 import { Roboto } from "next/font/google";
 const RobotoFont = Roboto({ weight: "300", subsets: ["latin"] });
@@ -48,7 +48,7 @@ function Navbar() {
         >
           <ul>
             <li>
-              <span className="" aria-current="page" onClick={() => signOut()}>
+              <span className="" aria-current="page" onClick={logout}>
                 sign out
               </span>
             </li>

@@ -1,5 +1,5 @@
 import { LogOut, MapPin, Ticket, Users } from "lucide-react";
-import { signOut } from "next-auth/react";
+import { logout } from "@/lib/logout";
 import { Button } from "../ui/button";
 import {
   DropdownMenu,
@@ -11,10 +11,6 @@ import { UserBadge } from "../UserBadge";
 import Link from "next/link";
 
 export const DesktopMenu = () => {
-  const logout = () => {
-    window.localStorage.removeItem("token");
-    signOut();
-  };
 
   return (
     <div className="md:flex justify-end hidden border-slate-800 border-r-[1px]">
@@ -28,7 +24,7 @@ export const DesktopMenu = () => {
           <DropdownMenuContent align="end">
             <DropdownMenuItem
               className="flex items-center justify-between"
-              onClick={() => logout()}
+              onClick={logout}
             >
               Log out <LogOut size={20} />
             </DropdownMenuItem>

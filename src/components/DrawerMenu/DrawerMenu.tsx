@@ -13,12 +13,14 @@ import { useState } from "react";
 import { UserBadge } from "../UserBadge";
 import { Button } from "../ui/button";
 import { Separator } from "../ui/separator";
-import { signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
+import { logout } from "@/lib/logout";
 
 export const DrawerMenu = () => {
   const [open, setOpen] = useState(false);
   const router = useRouter();
-  const session = useSession();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { data: session } = useSession() as any;
 
   const navigate = (url: string) => {
     router.push(url);
@@ -37,10 +39,10 @@ export const DrawerMenu = () => {
         <SheetHeader>
           <UserBadge />
           <SheetTitle className="text-left">
-            {session?.data?.user?.data?.name}
+            {session?.user?.data?.name}
           </SheetTitle>
           <p className="w-fit mt-1 font-light text-slate-600 text-xs">
-            {session?.data?.user?.data?.email}
+            {session?.user?.data?.email}
           </p>
         </SheetHeader>
         <div className="flex flex-col gap-4 py-4 mt-1">
@@ -87,7 +89,7 @@ export const DrawerMenu = () => {
           </div>
           <div className="w-full">
             <Button
-              onClick={() => signOut()}
+              onClick={logout}
               className="w-full justify-start gap-3 pl-0 mt-2"
               variant="ghost"
             >
