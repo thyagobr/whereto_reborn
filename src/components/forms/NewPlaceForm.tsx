@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { TagInput } from "../TagInput/TagInput";
 import { Button } from "../ui/button";
+import fetcher from "@/services/fetcher";
 import {
   Form,
   FormControl,
@@ -38,6 +39,21 @@ export const NewPlaceForm = ({ defaultName = "" } = {}) => {
     handleSubmit,
     formState: { isSubmitting },
   } = form;
+
+  const autofillAddress = async () => {
+    const { name, city, country, address } = form.getValues();
+    if (!name || !city || !country || address) return;
+    try {
+      const query = new URLSearchParams({ name, city, country, limit: "1" }).toString();
+      const response = await fetcher({ url: `/places/search_open_maps?${query}`, params: { method: "GET" } });
+      const place = response?.places?.[0];
+      if (place && place.display_name) {
+        form.setValue("address", place.display_name);
+      }
+    } catch (e) {
+      // silent fail – address stays empty
+    }
+  };
   const router = useRouter();
 
   const { trigger } = useCreatePlace();
@@ -134,6 +150,7 @@ export const NewPlaceForm = ({ defaultName = "" } = {}) => {
                   type="text"
                   placeholder="Address..."
                   disabled={isSubmitting}
+                  onFocus={autofillAddress}
                   {...field}
                 />
               </FormControl>
