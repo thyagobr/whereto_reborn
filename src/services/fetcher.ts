@@ -1,3 +1,5 @@
+import { logout } from "@/lib/logout";
+
 const fetcher = async ({ url, params }, data?) => {
   const fullUrl = `${process.env.NEXT_PUBLIC_API_URL}${url}`;
   const token = localStorage.getItem("token");
@@ -36,9 +38,9 @@ const fetcher = async ({ url, params }, data?) => {
   //   toast.error("Você não tem permissão para acessar essa página ou realizar essa ação.");
   // }
 
-  // if (response.status === 401) {
-  //   signOut();
-  // }
+  if (response.status === 401) {
+    logout();
+   }
 
   if (response.status === 204) {
     return null;
