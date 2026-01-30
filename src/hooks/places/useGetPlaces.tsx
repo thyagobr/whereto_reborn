@@ -10,7 +10,5 @@ export const useGetPlaces = (params = {}) => {
     fetcher
   );
 
-  console.log(data);
-
-  return { places: data?.places, error, isLoading };
+  return { places: data?.data?.places, error, isLoading };
 };
