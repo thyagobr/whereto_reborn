@@ -41,6 +41,16 @@ export function FeedTabs() {
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>
+        <NavigationMenuItem
+          data-active={isIconActive("/travels")}
+          className="data-[active=true]:border-primary data-[active=true]:border-b-[2px]"
+        >
+          <Link href="/travels" legacyBehavior passHref>
+            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+              Travels
+            </NavigationMenuLink>
+          </Link>
+        </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>
   );

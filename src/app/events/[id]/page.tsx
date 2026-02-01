@@ -8,26 +8,27 @@ import { useGetEvent } from "@/hooks/events/useGetEvent";
 import { useUser } from "@/hooks/users/useUser";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { FeedTabs } from "@/components/Feed/FeedTabs/FeedTabs";
-import { LoadSpinner } from "@/components/LoadSpinner/LoadSpinner";
+import { FeedTabs } from "@/components/Feed/FeedTabs/FeedTabs"; import { LoadSpinner } from "@/components/LoadSpinner/LoadSpinner";
 
 export default function ShowEvent({ params }) {
   const { id } = params;
-  const [event, setEvent] = useState(null);
+  //const [event, setEvent] = useState(null);
 
-  const { events, isLoading } = useGetEvent(id);
+  const { event, isLoading } = useGetEvent(id);
   const { user } = useUser();
 
   const [tab, setTab] = useState("chat");
 
-  useEffect(() => {
-    if (!events) return;
-    setEvent(events[0]);
-  }, [events]);
+  // useEffect(() => {
+  //   if (!events) return;
+  //   setEvent(events[0]);
+  // }, [events]);
 
   if (isLoading) {
     return <LoadSpinner />;
   }
+
+  console.log("Event:", event);
 
   if (!event) {
     return (
@@ -62,7 +63,7 @@ export default function ShowEvent({ params }) {
           </a>
           <p>{event.description}</p>
           <div className="flex mt-5 items-center justify-evenly gap-2">
-            {event.place.tags.map((tag) => (
+            {event.tags?.map((tag) => (
               <PlaceTag tag={tag} key={tag.id} />
             ))}
           </div>

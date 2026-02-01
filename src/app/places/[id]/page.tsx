@@ -22,13 +22,13 @@ export type TagAttributes = {
 };
 
 const PagesShow: NextPage = ({ params: { id } }: any) => {
-  const { places, isLoading } = useGetPlaces({ id });
+  const { place, isLoading } = useGetPlaces({ id });
 
   if (isLoading) {
     return <LoadSpinner />;
   }
 
-  if (!places || places.length === 0) {
+  if (!place) {
     return (
       <div className="flex flex-col items-center justify-center mt-20">
         <h1 className="text-3xl font-bold text-white mb-4">Place Not Found</h1>
@@ -41,8 +41,6 @@ const PagesShow: NextPage = ({ params: { id } }: any) => {
       </div>
     );
   }
-
-  const place = places[0];
 
   return (
     <div className="flex flex-col gap-3 mt-5">

@@ -6,7 +6,7 @@ const fetcher = async ({ url, params }, data?) => {
 
   let body;
   const headers = {
-    "ngrok-skip-browser-warning": "1337420",
+    //"ngrok-skip-browser-warning": "1337420",
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } as any;
 
@@ -52,6 +52,8 @@ const fetcher = async ({ url, params }, data?) => {
     const error = responseData;
     throw error;
   }
+
+  console.log("Response Data:", responseData);
 
   return responseData;
 };

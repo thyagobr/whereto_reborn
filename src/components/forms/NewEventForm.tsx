@@ -20,7 +20,7 @@ import { useCreateEvent } from "@/hooks/events/useCreateEvent";
 // Helper to format a Date instance into the value expected by an <input type="datetime-local"> (YYYY-MM-DDTHH:MM)
 const toDateTimeLocal = (date: Date) => {
   const pad = (n: number) => n.toString().padStart(2, "0");
-  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
+  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}:00`;
 };
 
 export const NewEventForm = ({ placeId = undefined, defaultName = "" } = {}) => {
@@ -35,8 +35,8 @@ export const NewEventForm = ({ placeId = undefined, defaultName = "" } = {}) => 
     resolver: zodResolver(NewEventFormSchema),
     defaultValues: {
       name: defaultName,
-      start_at: middayToday,
-      end_at: "",
+      startsAt: middayToday,
+      endsAt: null,
       description: "",
       public: false
     },
@@ -55,7 +55,9 @@ export const NewEventForm = ({ placeId = undefined, defaultName = "" } = {}) => 
     if (isSubmitting) return;
     const dataToSubmit = {
       ...data,
-      place_id: placeId,
+      startsAt: data.startsAt ? toDateTimeLocal(new Date(data.startsAt)) : null,
+      endsAt: data.endsAt ? toDateTimeLocal(new Date(data.endsAt)) : null,
+      placeId: placeId,
     };
 
     console.log("Form submitted", dataToSubmit);
@@ -65,9 +67,9 @@ export const NewEventForm = ({ placeId = undefined, defaultName = "" } = {}) => 
   const saveEvent = (data) => {
     const event = {
       name: data.name,
-      place_id: data.place_id,
-      start_at: data.start_at,
-      end_at: data.end_at,
+      placeId: data.placeId,
+      startsAt: data.startsAt,
+      endsAt: data.endsAt,
       description: data.description,
       public: data.public
     };
@@ -77,8 +79,9 @@ export const NewEventForm = ({ placeId = undefined, defaultName = "" } = {}) => 
       ,
       {
         loading: "Adding new event...",
-        success: async (data) => {
-          router.push(`/events/${data.id}`);
+        success: async (result) => {
+          console.log("Event created:", result);
+          router.push(`/events/${result.data.event.id}`);
 
           return "Successfully added new event";
         },
@@ -121,13 +124,13 @@ export const NewEventForm = ({ placeId = undefined, defaultName = "" } = {}) => 
 
         <FormField
           control={form.control}
-          name="start_at"
+          name="startsAt"
           render={({ field }) => (
             <FormItem className="flex flex-col gap-2">
               <FormLabel>Start at</FormLabel>
               <FormControl>
                 <Input
-                  id="start_at"
+                  id="startsAt"
                   type="datetime-local"
                   disabled={isSubmitting}
                   {...field}
@@ -140,13 +143,13 @@ export const NewEventForm = ({ placeId = undefined, defaultName = "" } = {}) => 
 
         <FormField
           control={form.control}
-          name="end_at"
+          name="endsAt"
           render={({ field }) => (
             <FormItem className="flex flex-col gap-2">
               <FormLabel>End at</FormLabel>
               <FormControl>
                 <Input
-                  id="end_at"
+                  id="endsAt"
                   type="datetime-local"
                   disabled={isSubmitting}
                   {...field}

@@ -9,5 +9,5 @@ export const useGetPlaceEvents = (placeId) => {
     fetcher
   );
 
-  return { events: data?.events, error, isLoading };
+  return { events: data?.data?.events, error, isLoading };
 }

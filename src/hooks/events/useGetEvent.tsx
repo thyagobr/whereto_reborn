@@ -9,5 +9,5 @@ export const useGetEvent = (id) => {
     fetcher
   );
 
-  return { events: data?.events, error, isLoading };
+  return { event: data?.data?.event, error, isLoading };
 }

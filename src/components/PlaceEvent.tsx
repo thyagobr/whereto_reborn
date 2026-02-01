@@ -32,7 +32,7 @@ export default function PlaceEvent({ event }) {
         <CardTitle>
           <Link href={`/events/${event.id}`}>{event.name}</Link>
         </CardTitle>
-        <p>{event.start_at}</p>
+        <p>{event.startsAt}</p>
       </CardHeader>
       <Separator className="mb-5" />
       <CardContent>{event.description}</CardContent>

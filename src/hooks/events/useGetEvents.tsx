@@ -10,6 +10,6 @@ export const useGetEvents = () => {
     fetcher
   );
 
-  return { events: data?.events, error, isLoading };
+  return { events: data?.data?.events, error, isLoading };
 }
 
