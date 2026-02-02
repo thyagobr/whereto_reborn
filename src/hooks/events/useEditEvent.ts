@@ -6,7 +6,7 @@ export const useEditEvent = (eventId) => {
     {
       url: `/events/${eventId}`,
       params: {
-        method: "PUT",
+        method: "PATCH",
       },
     },
     fetcher

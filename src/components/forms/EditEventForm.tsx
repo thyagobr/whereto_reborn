@@ -36,14 +36,14 @@ export const EditEventForm = ({ event }) => {
     resolver: zodResolver(EditEventFormSchema),
     defaultValues: {
       name: "",
-      start_at: middayToday,
-      end_at: "",
+      startsAt: middayToday,
+      endsAt: "",
       description: "",
       public: false
     },
   });
 
-  const placeId = event.place_id;
+  const placeId = event.placeId;
   const eventId = event.id;
 
   const router = useRouter();
@@ -63,7 +63,7 @@ export const EditEventForm = ({ event }) => {
     if (isSubmitting) return;
     const dataToSubmit = {
       ...data,
-      place_id: placeId,
+      placeId: placeId,
     };
 
     console.log("Form submitted", dataToSubmit);
@@ -72,12 +72,12 @@ export const EditEventForm = ({ event }) => {
 
   useEffect(() => {
     if (event) {
-      const formattedStartAt = event.start_at ? toDateTimeLocal(new Date(event.start_at)) : middayToday;
-      const formattedEndAt = event.end_at ? toDateTimeLocal(new Date(event.end_at)) : "";
+      const formattedStartAt = event.startsAt ? toDateTimeLocal(new Date(event.startsAt)) : middayToday;
+      const formattedEndAt = event.endsAt ? toDateTimeLocal(new Date(event.endsAt)) : "";
       reset({
         name: event.name,
-        start_at: formattedStartAt,
-        end_at: formattedEndAt,
+        startsAt: formattedStartAt,
+        endsAt: formattedEndAt,
         description: event.description,
         public: !!event.public,
       });
@@ -87,9 +87,9 @@ export const EditEventForm = ({ event }) => {
   const updateEvent = (data) => {
     const event = {
       name: data.name,
-      place_id: data.place_id,
-      start_at: data.start_at,
-      end_at: data.end_at,
+      placeId: data.placeId,
+      startsAt: data.startsAt,
+      endsAt: data.endsAt,
       description: data.description,
       public: data.public
     };
@@ -99,8 +99,8 @@ export const EditEventForm = ({ event }) => {
       ,
       {
         loading: "Editing event...",
-        success: async (data) => {
-          const { id } = data.events[0];
+        success: async (result) => {
+          const { id } = result.data.event;
           router.push(`/events/${id}`);
 
           return "Successfully edited the event";
@@ -144,13 +144,13 @@ export const EditEventForm = ({ event }) => {
 
         <FormField
           control={form.control}
-          name="start_at"
+          name="startsAt"
           render={({ field }) => (
             <FormItem className="flex flex-col gap-2">
               <FormLabel>Start at</FormLabel>
               <FormControl>
                 <Input
-                  id="start_at"
+                  id="startsAt"
                   type="datetime-local"
                   disabled={isSubmitting}
                   {...field}
@@ -163,13 +163,13 @@ export const EditEventForm = ({ event }) => {
 
         <FormField
           control={form.control}
-          name="end_at"
+          name="endsAt"
           render={({ field }) => (
             <FormItem className="flex flex-col gap-2">
               <FormLabel>End at</FormLabel>
               <FormControl>
                 <Input
-                  id="end_at"
+                  id="endsAt"
                   type="datetime-local"
                   disabled={isSubmitting}
                   {...field}
