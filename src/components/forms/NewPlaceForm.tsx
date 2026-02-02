@@ -45,10 +45,10 @@ export const NewPlaceForm = ({ defaultName = "" } = {}) => {
     if (!name || !city || !country || address) return;
     try {
       const query = new URLSearchParams({ name, city, country, limit: "1" }).toString();
-      const response = await fetcher({ url: `/places/search_open_maps?${query}`, params: { method: "GET" } });
-      const place = response?.places?.[0];
-      if (place && place.display_name) {
-        form.setValue("address", place.display_name);
+      const response = await fetcher({ url: `/places/search_address?${query}`, params: { method: "GET" } });
+      const displayName = response.data.display_name;
+      if (displayName) {
+        form.setValue("address", displayName);
       }
     } catch (e) {
       // silent fail – address stays empty
@@ -60,7 +60,7 @@ export const NewPlaceForm = ({ defaultName = "" } = {}) => {
 
   const savePlace = async (data) => {
     const response = await trigger(data);
-    router.push(`/places/${response.id}`);
+    router.push(`/places/${response.data.place.id}`);
   };
 
   return (
