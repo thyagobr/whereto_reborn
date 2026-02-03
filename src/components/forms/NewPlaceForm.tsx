@@ -46,7 +46,8 @@ export const NewPlaceForm = ({ defaultName = "" } = {}) => {
     try {
       const query = new URLSearchParams({ name, city, country, limit: "1" }).toString();
       const response = await fetcher({ url: `/places/search_address?${query}`, params: { method: "GET" } });
-      const displayName = response.data.display_name;
+      const results = response.data;
+      const displayName = results[0]?.display_name;
       if (displayName) {
         form.setValue("address", displayName);
       }
