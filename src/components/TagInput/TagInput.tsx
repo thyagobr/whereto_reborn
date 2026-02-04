@@ -3,9 +3,15 @@ import { useFormContext } from "react-hook-form";
 import { Input } from "../ui/input";
 import { RemovableTag } from "./RemovableTag/RemovableTag";
 
-export const TagInput = () => {
+type TagInputProps = {
+  defaultTags?: { text: string }[];
+};
+
+export const TagInput = ({ defaultTags }: TagInputProps) => {
   const [text, setText] = useState("");
-  const [tags, setTags] = useState([]);
+  const [tags, setTags] = useState<{ text: string }[]>(() =>
+    defaultTags?.length ? defaultTags.map((t) => ({ text: t.text })) : []
+  );
 
   const form = useFormContext();
 
@@ -27,7 +33,7 @@ export const TagInput = () => {
 
   useEffect(() => {
     form.setValue("tags", tags);
-  }, [tags]);
+  }, [tags, form]);
 
   return (
     <div>

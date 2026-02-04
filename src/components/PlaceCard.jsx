@@ -1,6 +1,7 @@
 "use client";
 
 import { Separator } from "@/components/ui/separator";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { PlaceTag } from "./place_tag";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
@@ -81,7 +82,20 @@ export function PlaceCard({ place }) {
             ))}
           </div>
           {isAdmin && (
-            <div className="mt-4">
+            <div className="mt-4 flex gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                asChild
+                className="border-amber-300/70 bg-amber-50/80 text-amber-800 hover:bg-amber-100/90 hover:border-amber-400/70"
+              >
+                <Link
+                  href={`/places/${place.id}/edit`}
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  Edit
+                </Link>
+              </Button>
               <Button
                 variant="destructive"
                 size="sm"
