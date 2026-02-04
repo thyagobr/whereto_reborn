@@ -29,8 +29,13 @@ export const EditEventForm = ({ event }) => {
   const middayToday = (() => {
     const d = new Date();
     d.setHours(12, 0, 0, 0);
-    return toDateTimeLocal(d);
+    return d.toISOString();
   })();
+
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toISOString();
+  }
 
   const form = useForm<EditEventFormSchema>({
     resolver: zodResolver(EditEventFormSchema),
@@ -63,6 +68,8 @@ export const EditEventForm = ({ event }) => {
     if (isSubmitting) return;
     const dataToSubmit = {
       ...data,
+      startsAt: data.startsAt ? formatDate(data.startsAt) : null,
+      endsAt: data.endsAt ? formatDate(data.endsAt) : null,
       placeId: placeId,
     };
 
