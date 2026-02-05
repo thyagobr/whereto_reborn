@@ -1,31 +1,11 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
-import { toast } from "sonner";
 import { TagInput } from "../TagInput/TagInput";
-import { Button } from "../ui/button";
-import fetcher from "@/services/fetcher";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "../ui/form";
-import { Input } from "../ui/input";
-import { EditPlaceFormSchema } from "./schemas/EditPlaceFormSchema";
+import { Tag } from "../Tag";
 import { useEditPlace } from "@/hooks/places/useEditPlace";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { useEffect } from "react";
+import { toast } from "sonner";
 
 type Place = {
   id: string;
@@ -36,184 +16,119 @@ type Place = {
   tags: { id?: string; text: string }[];
 };
 
+const cityOptions = [
+  { value: "berlin", label: "Berlin" },
+  { value: "natal", label: "Natal" },
+]
+
+const countryOptions = [
+  { value: "germany", label: "Germany" },
+  { value: "brazil", label: "Brasil" },
+]
+
 export const EditPlaceForm = ({ place }: { place: Place }) => {
-  const form = useForm({
-    resolver: zodResolver(EditPlaceFormSchema),
-    defaultValues: {
-      name: "",
-      address: "",
-      city: "",
-      country: "",
-      tags: [] as { text: string }[],
-    },
-  });
-
-  const {
-    handleSubmit,
-    reset,
-    setValue,
-    formState: { isSubmitting },
-  } = form;
-
+  const [placeData, setPlaceData] = useState<Place>(place);
+  const { trigger } = useEditPlace(place.id);
   const router = useRouter();
-  const { trigger } = useEditPlace(place?.id);
 
-  const autofillAddress = async () => {
-    const { name, city, country, address } = form.getValues();
-    if (!name || !city || !country || address) return;
-    try {
-      const query = new URLSearchParams({ name, city, country, limit: "1" }).toString();
-      const response = await fetcher({ url: `/places/search_address?${query}`, params: { method: "GET" } });
-      const results = response.data;
-      const displayName = results[0]?.display_name;
-      if (displayName) {
-        form.setValue("address", displayName);
-      }
-    } catch (e) {
-      // silent fail
-    }
-  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  useEffect(() => {
-    if (place) {
-      console.log("Resetting form with place data:", place);
-      const city = (place.city ?? "").toString().toLowerCase();
-      const country = (place.country ?? "").toString().toLowerCase();
-      console.log("City:", city, "Country:", country);
-      reset({
-        name: place.name,
-        address: place.address,
-        city: city || "",
-        country: country || "",
-        tags: place.tags?.map((t) => ({ text: t.text })) ?? [],
-      });
-        setValue("city", city);
-        setValue("country", country);
-    }
-  }, [place, reset]);
-
-  const onSubmit = (data: EditPlaceFormSchema) => {
-    if (isSubmitting) return;
-    toast.promise(trigger(data), {
-      loading: "Updating place...",
-      success: () => {
-        router.push(`/places/${place.id}`);
-        return "Place updated";
-      },
-      error: (err) => err?.message ?? "Failed to update place",
-    });
+    toast.promise(
+      trigger(placeData)
+      ,{
+        loading: "Saving place...",
+        success: async (result) => {
+          router.push(`/places/${result.data.place.id}`);
+          return "Place saved successfully.";
+        },
+        error: (error) => {
+          console.log(error);
+          return error.message;
+        },
+       }
+    )
   };
 
   return (
-    <Form {...form}>
-      <form
-        id="place-edit-form"
-        onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col gap-4"
-      >
-        <FormField
-          control={form.control}
+    <form className="flex flex-col gap-4">
+      <div className="flex flex-col gap-1">
+        <label htmlFor="name" className="text-sm font-medium text-white">
+          Name
+        </label>
+        <input
+          id="name"
           name="name"
-          render={({ field }) => (
-            <FormItem className="flex flex-col gap-2">
-              <FormLabel>Place name</FormLabel>
-              <FormControl>
-                <Input
-                  id="name"
-                  placeholder="Place name..."
-                  type="text"
-                  autoCapitalize="none"
-                  autoCorrect="off"
-                  disabled={isSubmitting}
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
+          value={placeData.name}
+          onChange={(e) => { setPlaceData({ ...placeData, name: e.target.value }) }}
+          className="bg-slate-800 text-white rounded-md p-2"
         />
+      </div>
 
-        <div className="flex justify-between">
-          <FormField
-            control={form.control}
-            defaultValue=""
-            name="city"
-            render={({ field }) => (
-              <FormItem className="flex flex-col gap-2">
-                <FormLabel>City</FormLabel>
-                <FormControl>
-                  <Select
-                    onValueChange={field.onChange}
-                    value={field.value === "" ? undefined : field.value}
-                  >
-                    <SelectTrigger className="w-[180px]">
-                      <SelectValue placeholder="Select a city" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="berlin">Berlin</SelectItem>
-                      <SelectItem value="natal">Natal</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="country"
-            render={({ field }) => (
-              <FormItem className="flex flex-col gap-2">
-                <FormLabel>Country</FormLabel>
-                <FormControl>
-                  <Select
-                    onValueChange={field.onChange}
-                    value={field.value === "" ? undefined : field.value}
-                  >
-                    <SelectTrigger className="w-[180px]">
-                      <SelectValue placeholder="Select a country" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="brasil">Brasil</SelectItem>
-                      <SelectItem value="germany">Germany</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+      <div className="flex justify-between gap-10">
+        <div className="w-full">
+          <div className="flex flex-col gap-1">
+            <label htmlFor="name" className="text-sm font-medium text-white">
+              City
+            </label>
+            <select
+              id="city"
+              name="city"
+              value={placeData.city}
+              onChange={(e) => setPlaceData({ ...placeData, city: e.target.value })}
+              className="bg-slate-800 text-white rounded-md p-2"
+            >
+              {cityOptions.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
 
-        <FormField
-          control={form.control}
+        <div className="w-full">
+          <div className="flex flex-col gap-1">
+            <label htmlFor="name" className="text-sm font-medium text-white">
+              Country
+            </label>
+            <select
+              id="country"
+              name="country"
+              value={placeData.country}
+              onChange={(e) => setPlaceData({ ...placeData, country: e.target.value })}
+              className="bg-slate-800 text-white rounded-md p-2"
+            >
+              {countryOptions.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-1">
+        <label htmlFor="address" className="text-sm font-medium text-white">
+          Address
+        </label>
+        <input
+          id="address"
           name="address"
-          render={({ field }) => (
-            <FormItem className="flex flex-col gap-2">
-              <FormLabel>Address</FormLabel>
-              <FormControl>
-                <Input
-                  id="address"
-                  type="text"
-                  placeholder="Address..."
-                  disabled={isSubmitting}
-                  onFocus={autofillAddress}
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
+          value={placeData.address}
+          onChange={(e) => { setPlaceData({ ...placeData, address: e.target.value }) }}
+          className="bg-slate-800 text-white rounded-md p-2"
         />
+      </div>
 
-        <FormLabel>Tags</FormLabel>
-        <TagInput defaultTags={place?.tags?.map((t) => ({ text: t.text }))} />
+      <div className="flex flex-col gap-1">
+        <Tag tags={placeData.tags} setTags={(tags) => setPlaceData({ ...placeData, tags })} />
+      </div>
 
-        <Button type="submit" className="mt-5" disabled={isSubmitting}>
-          Save changes
-        </Button>
-      </form>
-    </Form>
-  );
+      <button onClick={handleSubmit} className="bg-cyan-500 text-white rounded-md p-2 mt-4">
+        Save
+      </button>
+    </form>
+  )
 };

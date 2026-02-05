@@ -3,7 +3,7 @@ import { X } from "lucide-react";
 
 export const RemovableTag = ({ tag, setTags }) => {
   const removeItself = () => {
-    setTags((tags) => tags.filter((t) => t.text !== tag.text));
+    setTags(tags.filter((t) => t.text !== tag.text));
   };
 
   return (
