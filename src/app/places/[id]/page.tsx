@@ -9,6 +9,7 @@ import { FeedTabs } from "@/components/Feed/FeedTabs/FeedTabs";
 import { LoadSpinner } from "@/components/LoadSpinner/LoadSpinner";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { PlaceActions } from "@/components/PlaceActions";
 
 export type PlaceAttributes = {
   name: string;
@@ -62,6 +63,7 @@ const PagesShow: NextPage = ({ params: { id } }: any) => {
               <PlaceTag tag={tag} key={tag.id} />
             ))}
           </div>
+          <PlaceActions place={place} />
         </div>
       </Card>
 

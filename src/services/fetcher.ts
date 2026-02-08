@@ -46,7 +46,11 @@ const fetcher = async ({ url, params }, data?) => {
     return null;
   }
 
-  const responseData = await response.json();
+  let responseData = null;
+
+  if (response.headers.get("content-type")?.includes("application/json")) {
+    responseData = await response.json();
+  }
 
   if (!response.ok) {
     const error = responseData;

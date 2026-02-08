@@ -5,55 +5,13 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { PlaceTag } from "./place_tag";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
-import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import { useIsAdmin } from "@/lib/useIsAdmin";
-import { useDeletePlace } from "@/hooks/places/useDeletePlace";
-import { useSWRConfig } from "swr";
-import { useState } from "react";
-import { useToast } from "@/hooks/use-toast";
+import { PlaceActions } from "@/components/PlaceActions";
 
 export function PlaceCard({ place }) {
   const router = useRouter();
-  const isAdmin = useIsAdmin();
-  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const { trigger: deletePlace, isLoading: isDeleting } = useDeletePlace(place?.id);
-  const { mutate } = useSWRConfig();
-  const { toast } = useToast();
 
   const place_clicked = (place) => {
     router.push(`/places/${place.id}`);
-  };
-
-  const handleDeleteClick = (e) => {
-    e.stopPropagation();
-    e.preventDefault();
-    setDeleteDialogOpen(true);
-  };
-
-  const handleConfirmDelete = async () => {
-    try {
-      await deletePlace();
-      setDeleteDialogOpen(false);
-      mutate({ url: "/places" });
-      toast({
-        title: "Place deleted",
-        description: "The place has been removed.",
-      });
-    } catch (err) {
-      toast({
-        title: "Could not delete place",
-        description: err?.message || "Something went wrong. Please try again.",
-        variant: "destructive",
-      });
-    }
   };
 
   return (
@@ -81,60 +39,9 @@ export function PlaceCard({ place }) {
               <PlaceTag tag={tag} key={tag.id} />
             ))}
           </div>
-          {isAdmin && (
-            <div className="mt-4 flex gap-2">
-              <Button
-                variant="outline"
-                size="sm"
-                asChild
-                className="border-amber-300/70 bg-amber-50/80 text-amber-800 hover:bg-amber-100/90 hover:border-amber-400/70"
-              >
-                <Link
-                  href={`/places/${place.id}/edit`}
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  Edit
-                </Link>
-              </Button>
-              <Button
-                variant="destructive"
-                size="sm"
-                disabled={isDeleting}
-                onClick={handleDeleteClick}
-              >
-                {isDeleting ? "Deleting…" : "Delete"}
-              </Button>
-            </div>
-          )}
+         <PlaceActions place={place} />
         </CardContent>
       </Card>
-
-      <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
-        <DialogContent onClick={(e) => e.stopPropagation()}>
-          <DialogHeader>
-            <DialogTitle>Delete place</DialogTitle>
-            <DialogDescription>
-              Delete &quot;{place.name}&quot;? This action cannot be undone.
-            </DialogDescription>
-          </DialogHeader>
-          <DialogFooter>
-            <Button
-              variant="outline"
-              onClick={() => setDeleteDialogOpen(false)}
-              disabled={isDeleting}
-            >
-              Cancel
-            </Button>
-            <Button
-              variant="destructive"
-              onClick={handleConfirmDelete}
-              disabled={isDeleting}
-            >
-              {isDeleting ? "Deleting…" : "Delete"}
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
     </>
   );
 }
