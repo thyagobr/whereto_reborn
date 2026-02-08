@@ -25,7 +25,7 @@ export const Tag = ({ tags, setTags }) => {
     <div>
       <div className="flex flex-wrap gap-2">
         {tags.map((tag) => (
-          <RemovableTag key={tag.text} tag={tag} setTags={setTags} />
+          <RemovableTag key={tag.text} tag={tag} tags={tags} setTags={setTags} />
         ))}
       </div>
       <div className="mt-2">

@@ -1,7 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { X } from "lucide-react";
 
-export const RemovableTag = ({ tag, setTags }) => {
+export const RemovableTag = ({ tag, tags, setTags }) => {
   const removeItself = () => {
     setTags(tags.filter((t) => t.text !== tag.text));
   };
