@@ -6,8 +6,8 @@ const fetcher = async ({ url, params }, data?) => {
 
   let body;
   const headers = {
-    //"ngrok-skip-browser-warning": "1337420",
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    "ngrok-skip-browser-warning": "1337420",
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } as any;
 
   if (token) {
