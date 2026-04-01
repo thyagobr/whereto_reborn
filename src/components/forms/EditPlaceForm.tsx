@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { TagInput } from "../TagInput/TagInput";
-import { Tag } from "../Tag";
+import { Tag } from "../tag";
 import { useEditPlace } from "@/hooks/places/useEditPlace";
 import { toast } from "sonner";
 
