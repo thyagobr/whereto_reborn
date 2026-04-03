@@ -31,7 +31,7 @@ export function UnprotectedLayout({ children }) {
           </Link>
         </div>
         <FeedTabs />
-        <div className="grid grid-flow-col border-slate-800 border-t-[1px]">
+        <div className="border-slate-800 border-t-[1px]">
           {children}
         </div>
       </div>
