@@ -19,31 +19,33 @@ export const BottomNavigationMenu = () => {
   return (
     <>
       <div className="mt-[65px] md:hidden" />
-      <NavigationMenu>
-        <NavigationMenuList className="md:hidden border-slate-800 border-t-[1px] shadow-lg flex justify-between items-center px-6 w-full h-[60px] fixed bottom-0 bg-card">
-          <NavigationMenuItem>
-            <Link href="/" legacyBehavior passHref>
-              <NavigationMenuLink>
-                <Home color={isIconActive("/")} />
-              </NavigationMenuLink>
-            </Link>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            <Link href="/" legacyBehavior passHref>
-              <NavigationMenuLink>
-                <MapPin color={isIconActive("/")} />
-              </NavigationMenuLink>
-            </Link>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            <Link href="/events" legacyBehavior passHref>
-              <NavigationMenuLink>
-                <Ticket color={isIconActive("/events")} />
-              </NavigationMenuLink>
-            </Link>
-          </NavigationMenuItem>
-        </NavigationMenuList>
-      </NavigationMenu>
+      <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-card border-slate-800 border-t-[1px] shadow-lg">
+        <NavigationMenu>
+          <NavigationMenuList className="flex justify-between items-center px-6 w-full h-[60px]">
+            <NavigationMenuItem>
+              <Link href="/" legacyBehavior passHref>
+                <NavigationMenuLink>
+                  <Home color={isIconActive("/")} />
+                </NavigationMenuLink>
+              </Link>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <Link href="/" legacyBehavior passHref>
+                <NavigationMenuLink>
+                  <MapPin color={isIconActive("/")} />
+                </NavigationMenuLink>
+              </Link>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <Link href="/events" legacyBehavior passHref>
+                <NavigationMenuLink>
+                  <Ticket color={isIconActive("/events")} />
+                </NavigationMenuLink>
+              </Link>
+            </NavigationMenuItem>
+          </NavigationMenuList>
+        </NavigationMenu>
+      </div>
     </>
   );
 };
