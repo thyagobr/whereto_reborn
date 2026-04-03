@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { BottomNavigationMenu } from "../BottomNavigationMenu/BottomNavigationMenu";
 import { DesktopMenu } from "../DesktopMenu/DesktopMenu";
 import { FeedTabs } from "../Feed/FeedTabs/FeedTabs";
 import { Header } from "../header";
@@ -32,7 +31,6 @@ export function ProtectedLayout({ children }) {
         </div>
         <Recommendations />
       </div>
-      <BottomNavigationMenu />
     </>
   );
 }
